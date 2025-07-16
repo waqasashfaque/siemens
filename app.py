@@ -78,8 +78,7 @@ except Exception as e:
 st.sidebar.header("⚙️ Filters")
 years = ['All Years'] + sorted(df['Year'].dropna().unique().tolist())
 months = ['All Months'] + [
-    'January', 'February', 'March', 'April', 'May', 'June',
-    'July', 'August', 'September', 'October', 'November', 'December']
+    'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun','Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
 technicians = ['All Technicians'] + sorted(df['Technician_Name'].unique())
 channels = ['All Channels'] + sorted(df['complaint_channel'].dropna().unique())
 
