@@ -49,7 +49,7 @@ def process_kobo_data(data1, data2):
     merged['Total_C_Amount'].fillna(0, inplace=True)
     merged['Complaint_Reg_Date'] = pd.to_datetime(merged['Complaint_Reg_Date'], errors='coerce')
     merged.dropna(subset=['Complaint_Reg_Date'], inplace=True)
-    merged['MONTH'] = merged['Complaint_Reg_Date'].dt.strftime('%B')
+    merged['MONTH'] = merged['Complaint_Reg_Date'].dt.strftime('%b')
     # Set MONTH as categorical with calendar order
     month_order = [
         'January', 'February', 'March', 'April', 'May', 'June','July', 'August', 'September', 'October', 'November', 'December'
