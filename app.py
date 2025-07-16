@@ -52,7 +52,7 @@ def process_kobo_data(data1, data2):
     merged['MONTH'] = merged['Complaint_Reg_Date'].dt.strftime('%b')
     # Set MONTH as categorical with calendar order
     month_order = [
-        'January', 'February', 'March', 'April', 'May', 'June','July', 'August', 'September', 'October', 'November', 'December'
+        'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun','Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
     ]
     merged['MONTH'] = pd.Categorical(merged['MONTH'], categories=month_order, ordered=True)
     merged['Year'] = merged['Complaint_Reg_Date'].dt.year
