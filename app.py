@@ -1,8 +1,3 @@
-# streamlit_app.py
-
-# Required installations for running the app:
-#pip install streamlit pandas plotly requests koboextractor
-
 import streamlit as st
 import pandas as pd
 import plotly.express as px
