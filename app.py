@@ -5,15 +5,11 @@ import requests
 from datetime import datetime
 from koboextractor import KoboExtractor
 
-
-# 🔐 Import configuration from separate file
-from config import MY_TOKEN, FORM_ID_MAIN, FORM_ID_CHILD, KOBO_BASE_URL
-
-# --- API Configuration ---
-my_token = MY_TOKEN
-form_id_main = FORM_ID_MAIN
-form_id_child = FORM_ID_CHILD
-kobo_base_url = KOBO_BASE_URL
+# --- API Configuration from Streamlit secrets ---
+my_token = st.secrets["MY_TOKEN"]
+form_id_main = st.secrets["FORM_ID_MAIN"]
+form_id_child = st.secrets["FORM_ID_CHILD"]
+kobo_base_url = st.secrets["KOBO_BASE_URL"]
 
 @st.cache_data(show_spinner=True)
 def fetch_kobo_data():
