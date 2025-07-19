@@ -153,7 +153,7 @@ def chart_title_box(title):
         unsafe_allow_html=True
     )
 
-if not filtered.empty:
+        if not filtered.empty:
 # First row
 c1, c2 = st.columns(2)
 with c1:
@@ -164,7 +164,6 @@ with c1:
     fig1 = px.pie(pie_data, names='Complaint Channel', values='Count')
     fig1.update_layout(title=None, margin=dict(t=0), legend=dict(orientation="h",yanchor="bottom",y=-0.2,xanchor="center",x=0.5))
     st.plotly_chart(fig1, use_container_width=True)
-
 with c2:
     chart_title_box("Monthly Job Types")
     st.markdown("<div style='height:20px;'></div>", unsafe_allow_html=True)
@@ -187,7 +186,6 @@ with c3:
     fig3 = px.bar(top_products, x='Product', y='Count')
     fig3.update_layout(title=None,xaxis_title=None,margin=dict(t=0),legend=dict(orientation="h",yanchor="bottom",y=-0.2,xanchor="center",x=0.5))
     st.plotly_chart(fig3, use_container_width=True)
-
 with c4:
     chart_title_box("Monthly Complaint Trend")
     st.markdown("<div style='height:20px;'></div>", unsafe_allow_html=True)
