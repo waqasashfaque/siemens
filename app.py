@@ -180,7 +180,7 @@ if not filtered.empty:
         job_month = filtered.groupby(['MONTH', 'Job_Type']).size().reset_index(name='Count')
         job_month = job_month.sort_values('MONTH')
         fig2 = px.bar(job_month, x='MONTH', y='Count', color='Job_Type', barmode='group')
-        fig2.update_layout(title=None, xaxis_title=None)
+        fig2.update_layout(title=None, xaxis_title=None, margin=dict(t=0))
         st.plotly_chart(fig2, use_container_width=True)
 
     c3, c4 = st.columns(2)
@@ -189,14 +189,14 @@ if not filtered.empty:
         top_products = filtered['Product_classification'].value_counts().head(5).reset_index()
         top_products.columns = ['Product', 'Count']
         fig3 = px.bar(top_products, x='Product', y='Count')
-        fig3.update_layout(title=None, xaxis_title=None)
+        fig3.update_layout(title=None, xaxis_title=None, margin=dict(t=0))
         st.plotly_chart(fig3, use_container_width=True)
     with c4:
         chart_title_box("Monthly Complaint Trend")
         monthly_trend = filtered.groupby('MONTH').size().reset_index(name='Count')
         monthly_trend = monthly_trend.sort_values('MONTH')
         fig4 = px.line(monthly_trend, x='MONTH', y='Count', markers=True)
-        fig4.update_layout(title=None, xaxis_title=None)
+        fig4.update_layout(title=None, xaxis_title=None, margin=dict(t=0))
         st.plotly_chart(fig4, use_container_width=True)
 else:
     st.warning("No data available for selected filters.")
