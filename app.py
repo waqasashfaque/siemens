@@ -144,12 +144,6 @@ with col6:
 with col7:
     st.markdown(f'<div class="kpi-card kpi-blue"><div class="kpi-label">💰 Revenue (PKR)</div><div class="kpi-value">{int(filtered["Total_C_Amount"].sum())}</div></div>', unsafe_allow_html=True)
 
-
-
-st.markdown("<div style='height:25px;'></div>", unsafe_allow_html=True)
-
-
-
 # KPI-style blue title box
 import streamlit as st
 import plotly.express as px
