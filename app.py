@@ -74,20 +74,7 @@ except Exception as e:
     st.error(f"Error occurred: {e}")
     st.stop()
 
-# Sidebar Filters
-#st.sidebar.header("⚙️ Filters")
-#years = ['All Years'] + sorted(df['Year'].dropna().unique().tolist())
-#months = ['All Months'] + [
- #   'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun','Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
-#technicians = ['All Technicians'] + sorted(df['Technician_Name'].unique())
-#channels = ['All Channels'] + sorted(df['complaint_channel'].dropna().unique())
-
-#selected_year = st.sidebar.multiselect("Select Year", years, default='All Years')
-#selected_month = st.sidebar.multiselect("Select Month", months, default='All Months')
-#selected_technician = st.sidebar.multiselect("Select Technician", technicians, default='All Technicians')
-#selected_channel = st.sidebar.multiselect("Select Channel", channels, default='All Channels')
-
-# Filters (Now in main area, under the title and above KPIs)
+# Filters (under the title and above KPIs)
 st.subheader("🔎 Filters")
 
 years = ['All Years'] + sorted(df['Year'].dropna().unique().tolist())
@@ -167,30 +154,71 @@ with col6:
 with col7:
     st.markdown(f'<div class="kpi-card kpi-blue"><div class="kpi-label">💰 Revenue (PKR)</div><div class="kpi-value">{int(filtered["Total_C_Amount"].sum())}</div></div>', unsafe_allow_html=True)
 
-# Charts
-c1, c2 = st.columns(2)
-if not filtered.empty:
-    with c1:
-        pie_data = filtered['complaint_channel'].value_counts().reset_index()
-        pie_data.columns = ['Complaint Channel', 'Count']
-        fig1 = px.pie(pie_data, names='Complaint Channel', values='Count', hole=0.3, title="Complaint Channels")
-        st.plotly_chart(fig1, use_container_width=True)
-    with c2:
-        job_month = filtered.groupby(['MONTH', 'Job_Type']).size().reset_index(name='Count')
-        job_month = job_month.sort_values('MONTH')  # Sort by calendar month
-        fig2 = px.bar(job_month, x='MONTH', y='Count', color='Job_Type', title="Monthly Job Types", barmode='group')
-        st.plotly_chart(fig2, use_container_width=True)
+# Charts - old Style
+#c1, c2 = st.columns(2)
+#if not filtered.empty:
+ #   with c1:
+  #      pie_data = filtered['complaint_channel'].value_counts().reset_index()
+   #     pie_data.columns = ['Complaint Channel', 'Count']
+   #     fig1 = px.pie(pie_data, names='Complaint Channel', values='Count', hole=0.3, title="Complaint Channels")
+    #    st.plotly_chart(fig1, use_container_width=True)
+    #with c2:
+     #   job_month = filtered.groupby(['MONTH', 'Job_Type']).size().reset_index(name='Count')
+      #  job_month = job_month.sort_values('MONTH')  # Sort by calendar month
+       # fig2 = px.bar(job_month, x='MONTH', y='Count', color='Job_Type', title="Monthly Job Types", barmode='group')
+        #st.plotly_chart(fig2, use_container_width=True)
 
-    c3, c4 = st.columns(2)
-    with c3:
-        top_products = filtered['Product_classification'].value_counts().head(5).reset_index()
-        top_products.columns = ['Product', 'Count']
-        fig3 = px.bar(top_products, x='Product', y='Count', title="Top 5 Product Complaints")
-        st.plotly_chart(fig3, use_container_width=True)
-    with c4:
-        monthly_trend = filtered.groupby('MONTH').size().reset_index(name='Count')
-        monthly_trend = monthly_trend.sort_values('MONTH')  # Sort by calendar month
-        fig4 = px.line(monthly_trend, x='MONTH', y='Count', markers=True, title="Monthly Complaint Trend")
-        st.plotly_chart(fig4, use_container_width=True)
-else:
-    st.warning("No data available for selected filters.")
+#    c3, c4 = st.columns(2)
+ #   with c3:
+  #      top_products = filtered['Product_classification'].value_counts().head(5).reset_index()
+   #     top_products.columns = ['Product', 'Count']
+    #    fig3 = px.bar(top_products, x='Product', y='Count', title="Top 5 Product Complaints")
+     #   st.plotly_chart(fig3, use_container_width=True)
+    #with c4:
+     #   monthly_trend = filtered.groupby('MONTH').size().reset_index(name='Count')
+      #  monthly_trend = monthly_trend.sort_values('MONTH')  # Sort by calendar month
+       # fig4 = px.line(monthly_trend, x='MONTH', y='Count', markers=True, title="Monthly Complaint Trend")
+        #st.plotly_chart(fig4, use_container_width=True)
+#else:
+ #   st.warning("No data available for selected filters.")
+
+
+
+# Styling for chart boxes
+st.markdown(
+    """
+    <style>.chart-card {
+        background-color: #f5f7fa;
+        border-radius: 12px;
+        padding: 20px;
+        margin: 10px 0px;
+        box-shadow: 2px 2px 10px #e6e6e6;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
+# Pie Chart inside a card box
+st.markdown('<div class="chart-card">', unsafe_allow_html=True)
+st.write("Pie Chart Title")  # Pie chart card title (optional)
+st.plotly_chart(pie_fig, use_container_width=True)  # pie_fig is your pie chart figure
+st.markdown('</div>', unsafe_allow_html=True)
+
+# Bar Graph 1 inside a card box
+st.markdown('<div class="chart-card">', unsafe_allow_html=True)
+st.write("Bar Graph 1 Title")
+st.plotly_chart(bar_fig1, use_container_width=True)
+st.markdown('</div>', unsafe_allow_html=True)
+
+# Bar Graph 2 inside a card box
+st.markdown('<div class="chart-card">', unsafe_allow_html=True)
+st.write("Bar Graph 2 Title")
+st.plotly_chart(bar_fig2, use_container_width=True)
+st.markdown('</div>', unsafe_allow_html=True)
+
+# Line Trend Graph inside a card box
+st.markdown('<div class="chart-card">', unsafe_allow_html=True)
+st.write("Line Trend Title")
+st.plotly_chart(line_fig, use_container_width=True)
+st.markdown('</div>', unsafe_allow_html=True)
