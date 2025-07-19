@@ -144,7 +144,7 @@ def chart_title_box(title):
 if not filtered.empty:
 # First row
     c1, c2 = st.columns(2)
-        with c1:
+    with c1:
             chart_title_box("Complaint Channels")
             st.markdown("<div style='height:20px;'></div>", unsafe_allow_html=True)
             pie_data = filtered['complaint_channel'].value_counts().reset_index()
@@ -152,7 +152,7 @@ if not filtered.empty:
             fig1 = px.pie(pie_data, names='Complaint Channel', values='Count')
             fig1.update_layout(title=None, margin=dict(t=0), legend=dict(orientation="h",yanchor="bottom",y=-0.2,xanchor="center",x=0.5))
             st.plotly_chart(fig1, use_container_width=True)
-        with c2:
+    with c2:
             chart_title_box("Monthly Job Types")
             st.markdown("<div style='height:20px;'></div>", unsafe_allow_html=True)
             job_month = filtered.groupby(['MONTH', 'Job_Type']).size().reset_index(name='Count')
