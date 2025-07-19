@@ -182,74 +182,55 @@ with col7:
 #else:
  #   st.warning("No data available for selected filters.")
 
-# Chart box styles just like KPI cards
-st.markdown(
-    """
-    <style>.kpi-box {
-        border-radius: 12px;
-        padding: 20px 10px 10px 10px;
-        margin: 5px;
-        box-shadow: 2px 2px 10px #e6e6e6;
-        background-color: #1976d2;
-        color: #fff;
-        text-align: center;
-    }.kpi-title {
-        font-size: 1.2em;
-        font-weight: bold;
-        margin-bottom: 10px;
-        color: #fff;
-        text-align: center;
-    }
-    </style>
-    """,
-    unsafe_allow_html=True
-)
+# KPI-style title box for charts
+def chart_title_box(title):
+    st.markdown(
+        f"""
+        <div style="
+            background: linear-gradient(90deg,#1976d2,#2196f3);
+            border-radius:10px;
+            padding:10px;
+            margin-bottom:5px;
+            text-align:center;
+            color:#fff;
+            font-weight:bold;
+            font-size:20px;">
+            {title}
+        </div>""",
+        unsafe_allow_html=True
+    )
 
 if not filtered.empty:
     c1, c2 = st.columns(2)
-    # Pie Chart in KPI-like box
     with c1:
-        st.markdown('<div class="kpi-box">', unsafe_allow_html=True)
-        st.markdown('<div class="kpi-title">Complaint Channels</div>', unsafe_allow_html=True)
+        chart_title_box("Complaint Channels") # Blue KPI box as chart title
         pie_data = filtered['complaint_channel'].value_counts().reset_index()
         pie_data.columns = ['Complaint Channel', 'Count']
         fig1 = px.pie(pie_data, names='Complaint Channel', values='Count', hole=0.3)
-        fig1.update_layout(title=None)
+        fig1.update_layout(title=None) # No title inside chart
         st.plotly_chart(fig1, use_container_width=True)
-        st.markdown('</div>', unsafe_allow_html=True)
-    
-    # Bar Chart 1 in KPI-like box (hide x label)
     with c2:
-        st.markdown('<div class="kpi-box">', unsafe_allow_html=True)
-        st.markdown('<div class="kpi-title">Monthly Job Types</div>', unsafe_allow_html=True)
+        chart_title_box("Monthly Job Types")
         job_month = filtered.groupby(['MONTH', 'Job_Type']).size().reset_index(name='Count')
         job_month = job_month.sort_values('MONTH')
         fig2 = px.bar(job_month, x='MONTH', y='Count', color='Job_Type', barmode='group')
-        fig2.update_layout(title=None, xaxis_title=None)
+        fig2.update_layout(title=None, xaxis_title=None) # Remove 'MONTH' from x axis
         st.plotly_chart(fig2, use_container_width=True)
-        st.markdown('</div>', unsafe_allow_html=True)
 
     c3, c4 = st.columns(2)
-    # Bar Chart 2 in KPI-like box
     with c3:
-        st.markdown('<div class="kpi-box">', unsafe_allow_html=True)
-        st.markdown('<div class="kpi-title">Top 5 Product Complaints</div>', unsafe_allow_html=True)
+        chart_title_box("Top 5 Product Complaints")
         top_products = filtered['Product_classification'].value_counts().head(5).reset_index()
         top_products.columns = ['Product', 'Count']
         fig3 = px.bar(top_products, x='Product', y='Count')
         fig3.update_layout(title=None, xaxis_title=None)
         st.plotly_chart(fig3, use_container_width=True)
-        st.markdown('</div>', unsafe_allow_html=True)
-
-    # Line Chart in KPI-like box (hide x label)
     with c4:
-        st.markdown('<div class="kpi-box">', unsafe_allow_html=True)
-        st.markdown('<div class="kpi-title">Monthly Complaint Trend</div>', unsafe_allow_html=True)
+        chart_title_box("Monthly Complaint Trend")
         monthly_trend = filtered.groupby('MONTH').size().reset_index(name='Count')
         monthly_trend = monthly_trend.sort_values('MONTH')
         fig4 = px.line(monthly_trend, x='MONTH', y='Count', markers=True)
         fig4.update_layout(title=None, xaxis_title=None)
         st.plotly_chart(fig4, use_container_width=True)
-        st.markdown('</div>', unsafe_allow_html=True)
 else:
     st.warning("No data available for selected filters.")
