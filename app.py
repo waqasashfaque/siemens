@@ -167,22 +167,6 @@ def chart_title_box(title):
 
 if not filtered.empty:
     c1, c2 = st.columns(2)
-    with c1:
-        chart_title_box("Complaint Channels")
-        pie_data = filtered['complaint_channel'].value_counts().reset_index()
-        pie_data.columns = ['Complaint Channel', 'Count']
-        fig1 = px.pie(pie_data, names='Complaint Channel', values='Count')  # No title parameter!
-        fig1.update_layout(title=None, margin=dict(t=0))  # No undefined!
-        st.plotly_chart(fig1, use_container_width=True)
-    with c2:
-        chart_title_box("Monthly Job Types")
-        job_month = filtered.groupby(['MONTH', 'Job_Type']).size().reset_index(name='Count')
-        job_month = job_month.sort_values('MONTH')
-        fig2 = px.bar(job_month, x='MONTH', y='Count', color='Job_Type', barmode='group')
-        fig2.update_layout(title=None, xaxis_title=None, margin=dict(t=0))
-        st.plotly_chart(fig2, use_container_width=True)
-
-c1, c2 = st.columns(2)
 with c1:
     chart_title_box("Complaint Channels")
     st.markdown("<div style='height:20px;'></div>", unsafe_allow_html=True)  # Thodi space
