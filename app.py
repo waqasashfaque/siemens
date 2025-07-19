@@ -182,5 +182,5 @@ with c4:
     fig4 = px.line(monthly_trend, x='MONTH', y='Count', markers=True)
     fig4.update_layout(title=None,xaxis_title=None,margin=dict(t=0),legend=dict(orientation="h",yanchor="bottom",y=-0.2,xanchor="center",x=0.5))
     st.plotly_chart(fig4, use_container_width=True)
-#else:
- #   st.warning("No data available for selected filters.")
+else:
+   st.warning("No data available for selected filters.")
