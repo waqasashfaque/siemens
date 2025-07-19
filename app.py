@@ -108,20 +108,8 @@ if 'All Channels' not in selected_channel:
 
 st.markdown(
     """
-    <style>.kpi-card {
-        border-radius: 12px;
-        padding: 20px 10px 10px 10px;
-        margin: 5px;
-        box-shadow: 2px 2px 10px #e6e6e6;
-        text-align: center;
-    }.kpi-label {
-        color: #fff;
-        font-size: 1em;
-        font-weight: bold;
-    }.kpi-value {
-        font-size: 2em;
-        color: #fff;
-        font-weight: bold;
+    <style>.kpi-card {border-radius: 12px;padding: 20px 10px 10px 10px;margin: 5px;box-shadow: 2px 2px 10px #e6e6e6;text-align: center;
+    }.kpi-label {color: #fff;font-size: 1em;font-weight: bold;}.kpi-value {font-size: 2em;color: #fff;font-weight: bold;
     }.kpi-blue {background-color: #1976d2;}.kpi-green {background-color: #43a047;}.kpi-yellow {background-color: #fbc02d;}.kpi-orange {background-color: #f57c00;}.kpi-red {background-color: #d32f2f;}
     </style>
     """,
