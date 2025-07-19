@@ -184,7 +184,7 @@ if not filtered.empty:
 
     c3, c4 = st.columns(2)
     with c3:
-        chart_title_box("Top 5 Product Complaints")
+        chart_title_box("Products Complaints - Top 5")
         top_products = filtered['Product_classification'].value_counts().head(5).reset_index()
         top_products.columns = ['Product', 'Count']
         fig3 = px.bar(top_products, x='Product', y='Count')
