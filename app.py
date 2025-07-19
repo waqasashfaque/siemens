@@ -160,10 +160,6 @@ if not filtered.empty:
             fig2 = px.bar(job_month, x='MONTH', y='Count', color='Job_Type', barmode='group')
             fig2.update_layout(title=None,xaxis_title=None,margin=dict(t=0),legend=dict(orientation="h",yanchor="bottom",y=-0.2,xanchor="center",x=0.5))
             st.plotly_chart(fig2, use_container_width=True)
-
-# Space between rows
-st.markdown("<div style='height:35px;'></div>", unsafe_allow_html=True)
-
 # Second row (right under first row, same columns)
 c3, c4 = st.columns(2)
 with c3:
