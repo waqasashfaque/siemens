@@ -139,19 +139,8 @@ st.markdown("<div style='height:25px;'></div>", unsafe_allow_html=True)
 def chart_title_box(title):
     st.markdown(
         f"""
-        <div style="
-            background: linear-gradient(90deg,#1976d2,#2196f3);
-            border-radius:10px;
-            padding:10px;
-            margin-bottom:5px;
-            text-align:center;
-            color:#fff;
-            font-weight:bold;
-            font-size:20px;">
-            {title}
-        </div>""",
-        unsafe_allow_html=True
-    )
+        <div style="background: linear-gradient(90deg,#1976d2,#2196f3);border-radius:10px;padding:10px;margin-bottom:5px;text-align:center;color:#fff;font-weight:bold;font-size:20px;">
+            {title}</div>""",unsafe_allow_html=True)
 
         if not filtered.empty:
 # First row
