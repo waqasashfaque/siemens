@@ -104,16 +104,6 @@ if 'All Technicians' not in selected_technician:
 if 'All Channels' not in selected_channel:
     filtered = filtered[filtered['complaint_channel'].isin(selected_channel)]
 
-# KPIs Old style
-#col1, col2, col3, col4, col5, col6, col7 = st.columns(7)
-#col1.metric("📝 Total Complaints", len(filtered))
-#col2.metric("✅ Resolved", len(filtered[filtered['C_Job_Status'] == 'Resolved_Closed']))
-#col3.metric("⏳ Pending", len(filtered[filtered['C_Job_Status'] == 'Pending']))
-#col4.metric("🚶‍♂️ Not Visited", len(filtered[filtered['C_Job_Status'] == 'Not Visited Yet']))
-#col5.metric("❌ Cancelled", len(filtered[filtered['C_Job_Status'] == 'Cancelled']))
-#col6.metric("📵 Not Attending", len(filtered[filtered['C_Job_Status'] == 'Not_attending']))
-#col7.metric("💰 Revenue (PKR)", int(filtered['Total_C_Amount'].sum()))
-
 # KPIs as horizontal colored cards (each box different color, white bold text)
 
 st.markdown(
@@ -154,34 +144,6 @@ with col6:
 with col7:
     st.markdown(f'<div class="kpi-card kpi-blue"><div class="kpi-label">💰 Revenue (PKR)</div><div class="kpi-value">{int(filtered["Total_C_Amount"].sum())}</div></div>', unsafe_allow_html=True)
 
- #Charts - old Style
-#c1, c2 = st.columns(2)
-#if not filtered.empty:
- #   with c1:
-  #      pie_data = filtered['complaint_channel'].value_counts().reset_index()
-   #     pie_data.columns = ['Complaint Channel', 'Count']
-    #    fig1 = px.pie(pie_data, names='Complaint Channel', values='Count', hole=0.3, title="Complaint Channels")
-     #   st.plotly_chart(fig1, use_container_width=True)
-    #with c2:
-     #   job_month = filtered.groupby(['MONTH', 'Job_Type']).size().reset_index(name='Count')
-      #  job_month = job_month.sort_values('MONTH')  # Sort by calendar month
-       # fig2 = px.bar(job_month, x='MONTH', y='Count', color='Job_Type', title="Monthly Job Types", barmode='group')
-        #st.plotly_chart(fig2, use_container_width=True)
-
-#    c3, c4 = st.columns(2)
- #   with c3:
-  #      top_products = filtered['Product_classification'].value_counts().head(5).reset_index()
-   #     top_products.columns = ['Product', 'Count']
-    #    fig3 = px.bar(top_products, x='Product', y='Count', title="Top 5 Product Complaints")
-     #   st.plotly_chart(fig3, use_container_width=True)
-    #with c4:
-     #   monthly_trend = filtered.groupby('MONTH').size().reset_index(name='Count')
-      #  monthly_trend = monthly_trend.sort_values('MONTH')  # Sort by calendar month
-       # fig4 = px.line(monthly_trend, x='MONTH', y='Count', markers=True, title="Monthly Complaint Trend")
-        #st.plotly_chart(fig4, use_container_width=True)
-#else:
- #   st.warning("No data available for selected filters.")
-
 import streamlit as st
 import plotly.express as px
 
@@ -210,7 +172,8 @@ if not filtered.empty:
         pie_data = filtered['complaint_channel'].value_counts().reset_index()
         pie_data.columns = ['Complaint Channel', 'Count']
         fig1 = px.pie(pie_data, names='Complaint Channel', values='Count')  # No title parameter!
-        fig1.update_layout(title=None)  # Ensure no title inside chart
+        #fig1.update_layout(title=None)  # Ensure no title inside chart
+        fig1.update_layout(title=None, margin=dict(t=10))  # No undefined!
         st.plotly_chart(fig1, use_container_width=True)
     with c2:
         chart_title_box("Monthly Job Types")
