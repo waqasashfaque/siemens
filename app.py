@@ -154,10 +154,11 @@ def chart_title_box(title):
     )
 
 if not filtered.empty:
-    c1, c2 = st.columns(2)
+# First row
+c1, c2 = st.columns(2)
 with c1:
     chart_title_box("Complaint Channels")
-    st.markdown("<div style='height:20px;'></div>", unsafe_allow_html=True)  # Thodi space
+    st.markdown("<div style='height:20px;'></div>", unsafe_allow_html=True)
     pie_data = filtered['complaint_channel'].value_counts().reset_index()
     pie_data.columns = ['Complaint Channel', 'Count']
     fig1 = px.pie(pie_data, names='Complaint Channel', values='Count')
@@ -166,27 +167,34 @@ with c1:
 
 with c2:
     chart_title_box("Monthly Job Types")
-    st.markdown("<div style='height:20px;'></div>", unsafe_allow_html=True)  # Thodi space
+    st.markdown("<div style='height:20px;'></div>", unsafe_allow_html=True)
     job_month = filtered.groupby(['MONTH', 'Job_Type']).size().reset_index(name='Count')
     job_month = job_month.sort_values('MONTH')
     fig2 = px.bar(job_month, x='MONTH', y='Count', color='Job_Type', barmode='group')
     fig2.update_layout(title=None,xaxis_title=None,margin=dict(t=0),legend=dict(orientation="h",yanchor="bottom",y=-0.2,xanchor="center",x=0.5))
     st.plotly_chart(fig2, use_container_width=True)
-   
-    c3, c4 = st.columns(2)
-    with c3:
-        chart_title_box("Products Complaints - Top 5")
-        top_products = filtered['Product_classification'].value_counts().head(5).reset_index()
-        top_products.columns = ['Product', 'Count']
-        fig3 = px.bar(top_products, x='Product', y='Count')
-        fig3.update_layout(title=None,xaxis_title=None,margin=dict(t=0),legend=dict(orientation="h",yanchor="bottom",y=-0.2,xanchor="center",x=0.5))
-        st.plotly_chart(fig3, use_container_width=True)
-    with c4:
-        chart_title_box("Monthly Complaint Trend")
-        monthly_trend = filtered.groupby('MONTH').size().reset_index(name='Count')
-        monthly_trend = monthly_trend.sort_values('MONTH')
-        fig4 = px.line(monthly_trend, x='MONTH', y='Count', markers=True)
-        fig4.update_layout(title=None,xaxis_title=None,margin=dict(t=0),legend=dict(orientation="h",yanchor="bottom",y=-0.2,xanchor="center",x=0.5))
-        st.plotly_chart(fig4, use_container_width=True)
+
+# Space between rows
+st.markdown("<div style='height:35px;'></div>", unsafe_allow_html=True)
+
+# Second row (right under first row, same columns)
+c3, c4 = st.columns(2)
+with c3:
+    chart_title_box("Products Complaints - Top 5")
+    st.markdown("<div style='height:20px;'></div>", unsafe_allow_html=True)
+    top_products = filtered['Product_classification'].value_counts().head(5).reset_index()
+    top_products.columns = ['Product', 'Count']
+    fig3 = px.bar(top_products, x='Product', y='Count')
+    fig3.update_layout(title=None,xaxis_title=None,margin=dict(t=0),legend=dict(orientation="h",yanchor="bottom",y=-0.2,xanchor="center",x=0.5))
+    st.plotly_chart(fig3, use_container_width=True)
+
+with c4:
+    chart_title_box("Monthly Complaint Trend")
+    st.markdown("<div style='height:20px;'></div>", unsafe_allow_html=True)
+    monthly_trend = filtered.groupby('MONTH').size().reset_index(name='Count')
+    monthly_trend = monthly_trend.sort_values('MONTH')
+    fig4 = px.line(monthly_trend, x='MONTH', y='Count', markers=True)
+    fig4.update_layout(title=None,xaxis_title=None,margin=dict(t=0),legend=dict(orientation="h",yanchor="bottom",y=-0.2,xanchor="center",x=0.5))
+    st.plotly_chart(fig4, use_container_width=True)
 #else:
  #   st.warning("No data available for selected filters.")
