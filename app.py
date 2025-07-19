@@ -120,7 +120,7 @@ col1, col2, col3, col4, col5, col6, col7 = st.columns(7)
 with col1:
     st.markdown(f'<div class="kpi-card kpi-blue"><div class="kpi-label">📝 Total Complaints</div><div class="kpi-value">{len(filtered)}</div></div>', unsafe_allow_html=True)
 with col2:
-    st.markdown(f'<div class="kpi-card kpi-green"><div class="kpi-label">✅ Resolved</div><div class="kpi-value">{len(filtered[filtered["C_Job_Status"] == "Resolved_Closed"])}</div></div>', unsafe_allow_html=True)
+    st.markdown(f'<div class="kpi-card kpi-green"><div class="kpi-label">✅ Resolved/Closed</div><div class="kpi-value">{len(filtered[filtered["C_Job_Status"] == "Resolved_Closed"])}</div></div>', unsafe_allow_html=True)
 with col3:
     st.markdown(f'<div class="kpi-card kpi-yellow"><div class="kpi-label">⏳ Pending</div><div class="kpi-value">{len(filtered[filtered["C_Job_Status"] == "Pending"])}</div></div>', unsafe_allow_html=True)
 with col4:
