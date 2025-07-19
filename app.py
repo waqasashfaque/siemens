@@ -142,7 +142,7 @@ def chart_title_box(title):
         <div style="background: linear-gradient(90deg,#1976d2,#2196f3);border-radius:10px;padding:10px;margin-bottom:5px;text-align:center;color:#fff;font-weight:bold;font-size:20px;">
             {title}</div>""",unsafe_allow_html=True)
 
-        if not filtered.empty:
+    if not filtered.empty:
 # First row
 c1, c2 = st.columns(2)
 with c1:
