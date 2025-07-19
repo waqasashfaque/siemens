@@ -183,6 +183,7 @@ with col7:
  #   st.warning("No data available for selected filters.")
 
 # KPI-style title box for charts
+import plotly.express as px
 def chart_title_box(title):
     st.markdown(
         f"""
