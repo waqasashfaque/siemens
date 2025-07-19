@@ -75,17 +75,36 @@ except Exception as e:
     st.stop()
 
 # Sidebar Filters
-st.sidebar.header("⚙️ Filters")
+#st.sidebar.header("⚙️ Filters")
+#years = ['All Years'] + sorted(df['Year'].dropna().unique().tolist())
+#months = ['All Months'] + [
+ #   'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun','Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+#technicians = ['All Technicians'] + sorted(df['Technician_Name'].unique())
+#channels = ['All Channels'] + sorted(df['complaint_channel'].dropna().unique())
+
+#selected_year = st.sidebar.multiselect("Select Year", years, default='All Years')
+#selected_month = st.sidebar.multiselect("Select Month", months, default='All Months')
+#selected_technician = st.sidebar.multiselect("Select Technician", technicians, default='All Technicians')
+#selected_channel = st.sidebar.multiselect("Select Channel", channels, default='All Channels')
+
+# Filters (Now in main area, under the title and above KPIs)
+st.subheader("🔎 Filters")
+
 years = ['All Years'] + sorted(df['Year'].dropna().unique().tolist())
 months = ['All Months'] + [
     'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun','Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
 technicians = ['All Technicians'] + sorted(df['Technician_Name'].unique())
 channels = ['All Channels'] + sorted(df['complaint_channel'].dropna().unique())
 
-selected_year = st.sidebar.multiselect("Select Year", years, default='All Years')
-selected_month = st.sidebar.multiselect("Select Month", months, default='All Months')
-selected_technician = st.sidebar.multiselect("Select Technician", technicians, default='All Technicians')
-selected_channel = st.sidebar.multiselect("Select Channel", channels, default='All Channels')
+f1, f2, f3, f4 = st.columns([2,2,2,2])
+with f1:
+    selected_year = st.multiselect("Select Year", years, default='All Years')
+with f2:
+    selected_month = st.multiselect("Select Month", months, default='All Months')
+with f3:
+    selected_technician = st.multiselect("Select Technician", technicians, default='All Technicians')
+with f4:
+    selected_channel = st.multiselect("Select Channel", channels, default='All Channels')
 
 # Filter logic
 filtered = df.copy()
