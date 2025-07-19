@@ -117,15 +117,55 @@ if 'All Technicians' not in selected_technician:
 if 'All Channels' not in selected_channel:
     filtered = filtered[filtered['complaint_channel'].isin(selected_channel)]
 
-# KPIs
+# KPIs Old style
+#col1, col2, col3, col4, col5, col6, col7 = st.columns(7)
+#col1.metric("📝 Total Complaints", len(filtered))
+#col2.metric("✅ Resolved", len(filtered[filtered['C_Job_Status'] == 'Resolved_Closed']))
+#col3.metric("⏳ Pending", len(filtered[filtered['C_Job_Status'] == 'Pending']))
+#col4.metric("🚶‍♂️ Not Visited", len(filtered[filtered['C_Job_Status'] == 'Not Visited Yet']))
+#col5.metric("❌ Cancelled", len(filtered[filtered['C_Job_Status'] == 'Cancelled']))
+#col6.metric("📵 Not Attending", len(filtered[filtered['C_Job_Status'] == 'Not_attending']))
+#col7.metric("💰 Revenue (PKR)", int(filtered['Total_C_Amount'].sum()))
+
+# KPIs as horizontal colored cards
+
+st.markdown(
+    """
+    <style>.kpi-card {
+        background-color: #f5f7fa;
+        border-radius: 12px;
+        padding: 20px 10px 10px 10px;
+        margin: 5px;
+        box-shadow: 2px 2px 10px #e6e6e6;
+        text-align: center;
+    }.kpi-value {
+        font-size: 2em;
+        color: #16537e;
+        font-weight: bold;
+    }.kpi-label {
+        color: #4e5b61;
+        font-size: 1em;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
 col1, col2, col3, col4, col5, col6, col7 = st.columns(7)
-col1.metric("📝 Total Complaints", len(filtered))
-col2.metric("✅ Resolved", len(filtered[filtered['C_Job_Status'] == 'Resolved_Closed']))
-col3.metric("⏳ Pending", len(filtered[filtered['C_Job_Status'] == 'Pending']))
-col4.metric("🚶‍♂️ Not Visited", len(filtered[filtered['C_Job_Status'] == 'Not Visited Yet']))
-col5.metric("❌ Cancelled", len(filtered[filtered['C_Job_Status'] == 'Cancelled']))
-col6.metric("📵 Not Attending", len(filtered[filtered['C_Job_Status'] == 'Not_attending']))
-col7.metric("💰 Revenue (PKR)", int(filtered['Total_C_Amount'].sum()))
+with col1:
+    st.markdown(f'<div class="kpi-card"><div class="kpi-label">📝 Total Complaints</div><div class="kpi-value">{len(filtered)}</div></div>', unsafe_allow_html=True)
+with col2:
+    st.markdown(f'<div class="kpi-card"><div class="kpi-label">✅ Resolved</div><div class="kpi-value">{len(filtered[filtered["C_Job_Status"] == "Resolved_Closed"])}</div></div>', unsafe_allow_html=True)
+with col3:
+    st.markdown(f'<div class="kpi-card"><div class="kpi-label">⏳ Pending</div><div class="kpi-value">{len(filtered[filtered["C_Job_Status"] == "Pending"])}</div></div>', unsafe_allow_html=True)
+with col4:
+    st.markdown(f'<div class="kpi-card"><div class="kpi-label">🚶‍♂️ Not Visited</div><div class="kpi-value">{len(filtered[filtered["C_Job_Status"] == "Not Visited Yet"])}</div></div>', unsafe_allow_html=True)
+with col5:
+    st.markdown(f'<div class="kpi-card"><div class="kpi-label">❌ Cancelled</div><div class="kpi-value">{len(filtered[filtered["C_Job_Status"] == "Cancelled"])}</div></div>', unsafe_allow_html=True)
+with col6:
+    st.markdown(f'<div class="kpi-card"><div class="kpi-label">📵 Not Attending</div><div class="kpi-value">{len(filtered[filtered["C_Job_Status"] == "Not_attending"])}</div></div>', unsafe_allow_html=True)
+with col7:
+    st.markdown(f'<div class="kpi-card"><div class="kpi-label">💰 Revenue (PKR)</div><div class="kpi-value">{int(filtered["Total_C_Amount"].sum())}</div></div>', unsafe_allow_html=True)
 
 # Charts
 c1, c2 = st.columns(2)
