@@ -182,58 +182,73 @@ with col7:
 #else:
  #   st.warning("No data available for selected filters.")
 
-# Chart card style for boxes
+# Chart box styles just like KPI cards
 st.markdown(
     """
-    <style>.chart-card {
-        background-color: #f5f7fa;
+    <style>.kpi-box {
         border-radius: 12px;
-        padding: 20px;
-        margin: 10px 0px;
+        padding: 20px 10px 10px 10px;
+        margin: 5px;
         box-shadow: 2px 2px 10px #e6e6e6;
+        background-color: #1976d2;
+        color: #fff;
+        text-align: center;
+    }.kpi-title {
+        font-size: 1.2em;
+        font-weight: bold;
+        margin-bottom: 10px;
+        color: #fff;
+        text-align: center;
     }
     </style>
     """,
     unsafe_allow_html=True
 )
 
-# Charts inside stylish cards and columns
-c1, c2 = st.columns(2)
 if not filtered.empty:
-    # Pie chart in left column box
+    c1, c2 = st.columns(2)
+    # Pie Chart in KPI-like box
     with c1:
-        st.markdown('<div class="chart-card">', unsafe_allow_html=True)
+        st.markdown('<div class="kpi-box">', unsafe_allow_html=True)
+        st.markdown('<div class="kpi-title">Complaint Channels</div>', unsafe_allow_html=True)
         pie_data = filtered['complaint_channel'].value_counts().reset_index()
         pie_data.columns = ['Complaint Channel', 'Count']
-        fig1 = px.pie(pie_data, names='Complaint Channel', values='Count', hole=0.3, title="Complaint Channels")
+        fig1 = px.pie(pie_data, names='Complaint Channel', values='Count', hole=0.3)
+        fig1.update_layout(title=None)
         st.plotly_chart(fig1, use_container_width=True)
         st.markdown('</div>', unsafe_allow_html=True)
-        
-    # Bar chart in right column box
+    
+    # Bar Chart 1 in KPI-like box (hide x label)
     with c2:
-        st.markdown('<div class="chart-card">', unsafe_allow_html=True)
+        st.markdown('<div class="kpi-box">', unsafe_allow_html=True)
+        st.markdown('<div class="kpi-title">Monthly Job Types</div>', unsafe_allow_html=True)
         job_month = filtered.groupby(['MONTH', 'Job_Type']).size().reset_index(name='Count')
-        job_month = job_month.sort_values('MONTH')  # Sort by calendar month
-        fig2 = px.bar(job_month, x='MONTH', y='Count', color='Job_Type', title="Monthly Job Types", barmode='group')
+        job_month = job_month.sort_values('MONTH')
+        fig2 = px.bar(job_month, x='MONTH', y='Count', color='Job_Type', barmode='group')
+        fig2.update_layout(title=None, xaxis_title=None)
         st.plotly_chart(fig2, use_container_width=True)
         st.markdown('</div>', unsafe_allow_html=True)
-    
+
     c3, c4 = st.columns(2)
-    # Top products bar chart in left column box
+    # Bar Chart 2 in KPI-like box
     with c3:
-        st.markdown('<div class="chart-card">', unsafe_allow_html=True)
+        st.markdown('<div class="kpi-box">', unsafe_allow_html=True)
+        st.markdown('<div class="kpi-title">Top 5 Product Complaints</div>', unsafe_allow_html=True)
         top_products = filtered['Product_classification'].value_counts().head(5).reset_index()
         top_products.columns = ['Product', 'Count']
-        fig3 = px.bar(top_products, x='Product', y='Count', title="Top 5 Product Complaints")
+        fig3 = px.bar(top_products, x='Product', y='Count')
+        fig3.update_layout(title=None, xaxis_title=None)
         st.plotly_chart(fig3, use_container_width=True)
         st.markdown('</div>', unsafe_allow_html=True)
-        
-    # Monthly trend line chart in right column box
+
+    # Line Chart in KPI-like box (hide x label)
     with c4:
-        st.markdown('<div class="chart-card">', unsafe_allow_html=True)
+        st.markdown('<div class="kpi-box">', unsafe_allow_html=True)
+        st.markdown('<div class="kpi-title">Monthly Complaint Trend</div>', unsafe_allow_html=True)
         monthly_trend = filtered.groupby('MONTH').size().reset_index(name='Count')
-        monthly_trend = monthly_trend.sort_values('MONTH')  # Sort by calendar month
-        fig4 = px.line(monthly_trend, x='MONTH', y='Count', markers=True, title="Monthly Complaint Trend")
+        monthly_trend = monthly_trend.sort_values('MONTH')
+        fig4 = px.line(monthly_trend, x='MONTH', y='Count', markers=True)
+        fig4.update_layout(title=None, xaxis_title=None)
         st.plotly_chart(fig4, use_container_width=True)
         st.markdown('</div>', unsafe_allow_html=True)
 else:
