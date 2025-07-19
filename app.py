@@ -173,7 +173,7 @@ if not filtered.empty:
         pie_data.columns = ['Complaint Channel', 'Count']
         fig1 = px.pie(pie_data, names='Complaint Channel', values='Count')  # No title parameter!
         #fig1.update_layout(title=None)  # Ensure no title inside chart
-        fig1.update_layout(title=None, margin=dict(t=10))  # No undefined!
+        fig1.update_layout(title=None, margin=dict(t=0))  # No undefined!
         st.plotly_chart(fig1, use_container_width=True)
     with c2:
         chart_title_box("Monthly Job Types")
