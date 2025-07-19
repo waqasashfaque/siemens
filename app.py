@@ -179,14 +179,14 @@ with c2:
         top_products = filtered['Product_classification'].value_counts().head(5).reset_index()
         top_products.columns = ['Product', 'Count']
         fig3 = px.bar(top_products, x='Product', y='Count')
-        fig3.update_layout(title=None, xaxis_title=None, margin=dict(t=0))
+        fig3.update_layout(title=None,xaxis_title=None,margin=dict(t=0),legend=dict(orientation="h",yanchor="bottom",y=-0.2,xanchor="center",x=0.5))
         st.plotly_chart(fig3, use_container_width=True)
     with c4:
         chart_title_box("Monthly Complaint Trend")
         monthly_trend = filtered.groupby('MONTH').size().reset_index(name='Count')
         monthly_trend = monthly_trend.sort_values('MONTH')
         fig4 = px.line(monthly_trend, x='MONTH', y='Count', markers=True)
-        fig4.update_layout(title=None, xaxis_title=None, margin=dict(t=0))
+        fig4.update_layout(title=None,xaxis_title=None,margin=dict(t=0),legend=dict(orientation="h",yanchor="bottom",y=-0.2,xanchor="center",x=0.5))
         st.plotly_chart(fig4, use_container_width=True)
 #else:
  #   st.warning("No data available for selected filters.")
