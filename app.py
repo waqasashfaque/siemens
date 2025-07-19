@@ -62,7 +62,7 @@ def process_kobo_data(data1, data2):
 
 # --- Streamlit UI Starts Here ---
 st.set_page_config(page_title="Complaint Dashboard", layout="wide")
-st.title("📊 Home Appliances Care - Complaint Management Dashboard")
+st.title("📊 Home Appliances Care - Service Quality & Complaints Management Dashboard")
 
 if st.button("🔄 Sync Latest Data"):
     st.cache_data.clear()
