@@ -5,6 +5,29 @@ import requests
 from datetime import datetime
 from koboextractor import KoboExtractor
 
+# USERNAME and PASSWORD (change as needed)
+USER = "admin"
+PASS = "mypassword"
+
+def login_form():
+    st.title("Login")
+    username = st.text_input("Username")
+    password = st.text_input("Password", type="password")
+    if st.button("Login"):
+        if username == USER and password == PASS:
+            st.session_state['auth'] = True
+            st.success("Login successful! 🚀")
+        else:
+            st.error("Invalid credentials!")
+
+if 'auth' not in st.session_state or not st.session_state['auth']:
+    login_form()
+    st.stop()
+
+
+
+
+
 # --- API Configuration from Streamlit secrets ---
 my_token = st.secrets["MY_TOKEN"]
 form_id_main = st.secrets["FORM_ID_MAIN"]
