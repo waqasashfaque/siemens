@@ -6,6 +6,7 @@ from datetime import datetime
 from koboextractor import KoboExtractor
 
 # USERNAME and PASSWORD 
+
 USER = "admin"
 PASS = "mypassword"
 def login_form():
@@ -19,11 +20,9 @@ def login_form():
         else:
             st.error("Invalid credentials!")
 
-#if 'auth' not in st.session_state or not st.session_state['auth']:
- #   login_form()
-  #  st.stop()
-
-   # st.write("You are now logged in! 🚀")
+if 'auth' not in st.session_state or not st.session_state['auth']:
+    login_form()
+    st.stop()
 
 # --- API Configuration from Streamlit secrets ---
 my_token = st.secrets["MY_TOKEN"]
