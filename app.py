@@ -8,6 +8,12 @@ from koboextractor import KoboExtractor
 # USERNAME and PASSWORD 
 USER = "admin"
 PASS = "mypassword"
+
+if 'auth' not in st.session_state:
+    st.session_state['auth'] = False
+if 'show_dashboard' not in st.session_state:
+    st.session_state['show_dashboard'] = False
+
 def login_form():
     st.title("Login")
     username = st.text_input("Username")
@@ -19,10 +25,17 @@ def login_form():
         else:
             st.error("Invalid credentials!")
 
-if 'auth' not in st.session_state or not st.session_state['auth']:
+# Auth Logic
+if not st.session_state['auth']:
     login_form()
     st.stop()
-
+elif not st.session_state['show_dashboard']:
+    st.success("Login successful! 🚀")
+    if st.button("View Dashboard"):
+        st.session_state['show_dashboard'] = True
+        st.experimental_rerun()
+    st.stop()
+    
 # --- API Configuration from Streamlit secrets ---
 my_token = st.secrets["MY_TOKEN"]
 form_id_main = st.secrets["FORM_ID_MAIN"]
