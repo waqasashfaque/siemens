@@ -5,43 +5,24 @@ import requests
 from datetime import datetime
 from koboextractor import KoboExtractor
 
-# USERNAME and PASSWORD (change as needed)
-#USER = "admin"
-#PASS = "mypassword"
-#def login_form():
- #   st.title("Login")
-  #  username = st.text_input("Username")
-   # password = st.text_input("Password", type="password")
-    #if st.button("Login"):
-     #   if username == USER and password == PASS:
-      #      st.session_state['auth'] = True
-       #     st.success("Login successful! 🚀")
-        #else:
-         #   st.error("Invalid credentials!")
-
-#if 'auth' not in st.session_state or not st.session_state['auth']:
- #   login_form()
-  #  st.stop()
-
 # USERNAME and PASSWORD 
-import streamlit as st
-import streamlit_authenticator as stauth
+ USERNAME and PASSWORD
+USER = "admin"
+PASS = "mypassword"
+def login_form():
+    st.title("Login")
+    username = st.text_input("Username")
+    password = st.text_input("Password", type="password")
+    if st.button("Login"):
+        if username == USER and password == PASS:
+            st.session_state['auth'] = True
+            st.success("Login successful! 🚀")
+        else:
+            st.error("Invalid credentials!")
 
-# User credentials
-users = ['Waqas Ashfaque']
-usernames = ['waqas_ashfaque']
-passwords = ['pass123']
-hashed_passwords = stauth.Hasher(passwords).generate()
-authenticator = stauth.Authenticate(users,usernames,hashed_passwords,'dashboard_cookie', 'abcdef', cookie_expiry_days=1)
-
-name, authentication_status, username = authenticator.login('Login', 'main')
-if authentication_status == False:
-    st.error('Incorrect username or password ❌')
-if authentication_status == None:
-    st.warning('Please enter your username and password')
-if authentication_status:
-    st.success(f"Welcome, {name}! ✅")
-    # Yahan se dashboard ka code shuru karo
+if 'auth' not in st.session_state or not st.session_state['auth']:
+    login_form()
+    st.stop()
 
     st.title("Home Appliances Service Insights Portal")
     st.write("You are now logged in! 🚀")
