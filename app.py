@@ -79,8 +79,7 @@ def process_kobo_data(data1, data2):
     return merged
 
 # --- Streamlit UI Starts Here ---
-st.set_page_config(page_title="Complaint Dashboard", layout="wide")
-st.title("📊 Home Appliances Care - Complaints Management System Dashboard")
+#Getting live data
 
 if st.button("🔄 Sync Latest Data"):
     st.cache_data.clear()
@@ -91,6 +90,9 @@ try:
 except Exception as e:
     st.error(f"Error occurred: {e}")
     st.stop()
+
+st.set_page_config(page_title="Complaint Dashboard", layout="wide")
+st.title("📊 Home Appliances Care - Complaints Management System Dashboard")
 
 # Filters (under the title and above KPIs)
 #st.subheader("🔎 Filters")
@@ -109,7 +111,7 @@ with f2:
 with f3:
     selected_technician = st.multiselect("Select Technician", technicians, default='All Technicians')
 with f4:
-    selected_channel = st.multiselect("Select Channel", channels, default='All Channels')
+    selected_channel = st.multiselect("Select Complaint Channel", channels, default='All Channels')
 
 # Filter logic
 filtered = df.copy()
