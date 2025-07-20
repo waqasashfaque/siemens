@@ -6,7 +6,6 @@ from datetime import datetime
 from koboextractor import KoboExtractor
 
 # USERNAME and PASSWORD 
- USERNAME and PASSWORD
 USER = "admin"
 PASS = "mypassword"
 def login_form():
