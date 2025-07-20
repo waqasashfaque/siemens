@@ -9,15 +9,16 @@ from koboextractor import KoboExtractor
 USER = "admin"
 PASS = "mypassword"
 def login_form():
-    st.title("Please enter Your Login details")
+    st.title("Login")
     username = st.text_input("Username")
     password = st.text_input("Password", type="password")
     if st.button("Login"):
         if username == USER and password == PASS:
             st.session_state['auth'] = True
-            st.experimental_rerun()  # Auto-refresh for redirect
+            st.success("Login successful! 🚀")
         else:
             st.error("Invalid credentials!")
+
 if 'auth' not in st.session_state or not st.session_state['auth']:
     login_form()
     st.stop()
