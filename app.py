@@ -19,12 +19,11 @@ def login_form():
         else:
             st.error("Invalid credentials!")
 
-if 'auth' not in st.session_state or not st.session_state['auth']:
-    login_form()
-    st.stop()
+#if 'auth' not in st.session_state or not st.session_state['auth']:
+ #   login_form()
+  #  st.stop()
 
-    st.title("Home Appliances Service Insights Portal")
-    st.write("You are now logged in! 🚀")
+   # st.write("You are now logged in! 🚀")
 
 # --- API Configuration from Streamlit secrets ---
 my_token = st.secrets["MY_TOKEN"]
