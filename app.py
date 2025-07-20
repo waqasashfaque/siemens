@@ -93,7 +93,7 @@ except Exception as e:
     st.stop()
 
 # Filters (under the title and above KPIs)
-st.subheader("🔎 Filters")
+#st.subheader("🔎 Filters")
 
 years = ['All Years'] + sorted(df['Year'].dropna().unique().tolist())
 months = ['All Months'] + [
