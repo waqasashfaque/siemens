@@ -33,7 +33,7 @@ elif not st.session_state['show_dashboard']:
     st.success("Login successful! 🚀")
     if st.button("View Dashboard"):
         st.session_state['show_dashboard'] = True
-        st.experimental_rerun()
+        st.rerun()
     st.stop()
     
 # --- API Configuration from Streamlit secrets ---
