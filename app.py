@@ -8,7 +8,6 @@ from koboextractor import KoboExtractor
 # USERNAME and PASSWORD 
 USER = "admin"
 PASS = "mypassword"
-
 def login_form():
     st.title("Login")
     username = st.text_input("Username")
@@ -16,18 +15,12 @@ def login_form():
     if st.button("Login"):
         if username == USER and password == PASS:
             st.session_state['auth'] = True
-            st.session_state['show_dashboard'] = False
             st.success("Login successful! 🚀")
         else:
             st.error("Invalid credentials!")
 
 if 'auth' not in st.session_state or not st.session_state['auth']:
     login_form()
-    st.stop()
-elif not st.session_state.get('show_dashboard', False):
-    if st.button("View Dashboard"):
-        st.session_state['show_dashboard'] = True
-        st.experimental_rerun()
     st.stop()
 
 # --- API Configuration from Streamlit secrets ---
