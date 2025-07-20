@@ -1,28 +1,27 @@
-import streamlit as st
-import pandas as pd
-import plotly.express as px
-import requests
-from datetime import datetime
-from koboextractor import KoboExtractor
-
 # USERNAME and PASSWORD 
-
 USER = "admin"
 PASS = "mypassword"
 def login_form():
-    st.title("Login")
+    st.title("Please enter Your Login details")
     username = st.text_input("Username")
     password = st.text_input("Password", type="password")
     if st.button("Login"):
         if username == USER and password == PASS:
             st.session_state['auth'] = True
-            st.success("Login successful! 🚀")
+            st.experimental_rerun()  # Auto-refresh for redirect
         else:
             st.error("Invalid credentials!")
 
 if 'auth' not in st.session_state or not st.session_state['auth']:
     login_form()
     st.stop()
+
+import streamlit as st
+import pandas as pd
+import plotly.express as px
+import requests
+from datetime import datetime
+from koboextractor import KoboExtractor
 
 # --- API Configuration from Streamlit secrets ---
 my_token = st.secrets["MY_TOKEN"]
