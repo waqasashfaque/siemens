@@ -26,17 +26,14 @@ from koboextractor import KoboExtractor
 # USERNAME and PASSWORD 
 import streamlit as st
 import streamlit_authenticator as stauth
+
 # User credentials
-users = ['waqas_ashfaque']
+users = ['Waqas Ashfaque']
 usernames = ['waqas_ashfaque']
 passwords = ['pass123']
 hashed_passwords = stauth.Hasher(passwords).generate()
-authenticator = stauth.Authenticate(
-    users,
-    usernames,
-    hashed_passwords,
-    'dashboard_cookie', 'abcdef', cookie_expiry_days=1
-)
+authenticator = stauth.Authenticate(users,usernames,hashed_passwords,'dashboard_cookie', 'abcdef', cookie_expiry_days=1)
+
 name, authentication_status, username = authenticator.login('Login', 'main')
 if authentication_status == False:
     st.error('Incorrect username or password ❌')
