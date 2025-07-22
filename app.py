@@ -241,9 +241,7 @@ if not filtered.empty:
    #st.warning("No data available for selected filters.")
 
 
-
 # Not Visited Complaints Table
-
 st.markdown("<div style='height:25px;'></div>", unsafe_allow_html=True)
 chart_title_box("🚫 Not Visited Complaints List")
 st.markdown("<div style='height:10px;'></div>", unsafe_allow_html=True)
@@ -283,17 +281,17 @@ if not not_visited_df.empty:
     st.markdown("""
     <style>
         /* Blue header with white text */
-        .dataframe thead tr {
+        table.dataframe thead tr {
             background-color: #1976d2 !important;
         }
-        .dataframe thead tr th {
+        table.dataframe thead tr th {
             color: white !important;
             font-weight: bold !important;
             text-align: center !important;
         }
         
         /* Wrap text in Address column and adjust row height */
-        .dataframe tbody tr td:nth-child(5) {
+        table.dataframe tbody tr td:nth-child(5) {
             white-space: normal !important;
             word-wrap: break-word !important;
             max-width: 250px !important;
@@ -303,41 +301,41 @@ if not not_visited_df.empty:
         }
         
         /* Set fixed widths for other columns */
-        .dataframe th:nth-child(1) { width: 80px !important; }  /* Complaint ID */
-        .dataframe th:nth-child(2) { width: 100px !important; } /* Job Type */
-        .dataframe th:nth-child(3) { width: 120px !important; } /* Registration Date */
-        .dataframe th:nth-child(4) { width: 150px !important; } /* Customer Name */
-        .dataframe th:nth-child(5) { width: 250px !important; } /* Address */
-        .dataframe th:nth-child(6) { width: 120px !important; } /* Mobile Number */
-        .dataframe th:nth-child(7) { width: 150px !important; } /* Product */
-        .dataframe th:nth-child(8) { width: 300px !important; } /* Issue History */
+        table.dataframe th:nth-child(1) { width: 80px !important; }  /* Complaint ID */
+        table.dataframe th:nth-child(2) { width: 100px !important; } /* Job Type */
+        table.dataframe th:nth-child(3) { width: 120px !important; } /* Registration Date */
+        table.dataframe th:nth-child(4) { width: 150px !important; } /* Customer Name */
+        table.dataframe th:nth-child(5) { width: 250px !important; } /* Address */
+        table.dataframe th:nth-child(6) { width: 120px !important; } /* Mobile Number */
+        table.dataframe th:nth-child(7) { width: 150px !important; } /* Product */
+        table.dataframe th:nth-child(8) { width: 300px !important; } /* Issue History */
         
         /* Remove horizontal scroll */
-        .dataframe {
+        table.dataframe {
             width: 100% !important;
             table-layout: fixed !important;
         }
         
         /* Center-align specific columns */
-        .dataframe td:nth-child(1),
-        .dataframe td:nth-child(2),
-        .dataframe td:nth-child(3),
-        .dataframe td:nth-child(6) {
+        table.dataframe td:nth-child(1),
+        table.dataframe td:nth-child(2),
+        table.dataframe td:nth-child(3),
+        table.dataframe td:nth-child(6) {
             text-align: center !important;
         }
         
         /* Add border to table */
-        .dataframe {
+        table.dataframe {
             border: 1px solid #ddd !important;
             border-collapse: collapse !important;
         }
         
-        .dataframe th, .dataframe td {
+        table.dataframe th, table.dataframe td {
             border: 1px solid #ddd !important;
         }
         
         /* Alternating row colors */
-        .dataframe tr:nth-child(even) {
+        table.dataframe tr:nth-child(even) {
             background-color: #f9f9f9 !important;
         }
     </style>
