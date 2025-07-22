@@ -236,7 +236,7 @@ not_visited_df = filtered[filtered['C_Job_Status'] == "Not Visited Yet"]
 
 if not not_visited_df.empty:
     # Select and rename columns
-    display_df = not_visited_df[['S_Num', 'Complaint_Reg_Date', 'Product_classification', 
+    display_df = not_visited_df[['S_Num', 'Job_Type', 'Complaint_Reg_Date',  'Customer_name', 'address', 'Mobile_number', 'Product_classification', 'issue_history', 
                                 'complaint_channel', 'Technician_Name']].copy()
     
     # Format date properly
@@ -245,10 +245,15 @@ if not not_visited_df.empty:
     # Rename columns for better display
     display_df.rename(columns={
         'S_Num': 'Complaint ID',
+        'Job_Type': 'Job Type',
         'Complaint_Reg_Date': 'Registration Date',
+        'Customer_name': 'Name',
+        'address': 'Address',
+        'Mobile_number': 'Mobile',
         'Product_classification': 'Product',
+        'issue_history': 'Issue',
         'complaint_channel': 'Complaint Channel',
-        'Technician_Name': 'Technician'
+        'Technician_Name': 'Technician'      
     }, inplace=True)
     
     # Display the table with alternating row colors
@@ -272,3 +277,5 @@ if not not_visited_df.empty:
     )
 else:
     st.info("No 'Not Visited' complaints found with the current filters.")
+
+
