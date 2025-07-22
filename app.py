@@ -45,29 +45,12 @@ def process_kobo_data(data1, data2):
     df1 = pd.json_normalize(data1.get('results', []))
     df2 = pd.json_normalize(data2.get('results', []))
 
-    #if not df1.empty:
-     #   df1.columns = df1.columns.str.replace('Registration/', '')
-      #  selected_cols_df1 = ['S_Num', 'Job_Type', 'Complaint_Reg_Date', 'Product_classification', 'complaint_channel']    
-       # df1 = df1[[col for col in selected_cols_df1 if col in df1.columns]]
-# In the process_kobo_data function:
+    if not df1.empty:
+        df1.columns = df1.columns.str.replace('Registration/', '')
+        selected_cols_df1 = ['S_Num', 'Job_Type', 'Complaint_Reg_Date', 'Product_classification', 'complaint_channel']
+        df1 = df1[[col for col in selected_cols_df1 if col in df1.columns]]
 
-if not df1.empty:
-    df1.columns = df1.columns.str.replace('Registration/', '')
-    # Add all required columns
-    selected_cols_df1 = [
-        'S_Num', 
-        'Job_Type', 
-        'Complaint_Reg_Date', 
-        'Customer_name', 
-        'address', 
-        'Mobile_number', 
-        'Product_classification', 
-        'issue_history', 
-        'complaint_channel'
-    ]
-    df1 = df1[[col for col in selected_cols_df1 if col in df1.columns]]
-
-if not df2.empty:
+    if not df2.empty:
         df2.columns = df2.columns.str.replace('C_Followup/', '')
         df2.columns = df2.columns.str.replace('C_Registration/', '')
         df2.columns = df2.columns.str.replace('C_invoice_group/', '')
@@ -239,6 +222,7 @@ if not filtered.empty:
         st.plotly_chart(fig4, use_container_width=True, config={"displayModeBar": False})
 #else:
    #st.warning("No data available for selected filters.")
+
 # Add this code at the end of your Streamlit app, after the charts
 
 # Not Visited Complaints Table
@@ -251,18 +235,8 @@ not_visited_df = filtered[filtered['C_Job_Status'] == "Not Visited Yet"]
 
 if not not_visited_df.empty:
     # Select and rename columns
-    display_df = not_visited_df[[
-        'S_Num', 
-        'Job_Type', 
-        'Complaint_Reg_Date', 
-        'Customer_name', 
-        'address', 
-        'Mobile_number', 
-        'Product_classification', 
-        'issue_history', 
-        'complaint_channel', 
-        'Technician_Name'
-    ]].copy()
+    display_df = not_visited_df[['S_Num', 'Complaint_Reg_Date', 'Product_classification', 
+                                'complaint_channel', 'Technician_Name']].copy()
     
     # Format date properly
     display_df['Complaint_Reg_Date'] = pd.to_datetime(display_df['Complaint_Reg_Date']).dt.strftime('%d-%b-%Y')
@@ -270,13 +244,8 @@ if not not_visited_df.empty:
     # Rename columns for better display
     display_df.rename(columns={
         'S_Num': 'Complaint ID',
-        'Job_Type': 'Job Type',
         'Complaint_Reg_Date': 'Registration Date',
-        'Customer_name': 'Customer Name',
-        'address': 'Address',
-        'Mobile_number': 'Mobile Number',
         'Product_classification': 'Product',
-        'issue_history': 'Issue History',
         'complaint_channel': 'Complaint Channel',
         'Technician_Name': 'Technician'
     }, inplace=True)
@@ -288,9 +257,7 @@ if not not_visited_df.empty:
         width=1200,
         column_config={
             "Complaint ID": st.column_config.NumberColumn(format="%d"),
-            "Registration Date": st.column_config.DateColumn(format="DD MMM YYYY"),
-            "Mobile Number": st.column_config.TextColumn(),
-            "Issue History": st.column_config.TextColumn(width="large")
+            "Registration Date": st.column_config.DateColumn(format="DD MMM YYYY")
         }
     )
     
