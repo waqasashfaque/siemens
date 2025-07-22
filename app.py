@@ -224,10 +224,9 @@ if not filtered.empty:
 #else:
    #st.warning("No data available for selected filters.")
 
-
 # Add this code at the end of your Streamlit app, after the charts
 
-# Not Visited Complaints Table to show after the dashboard
+# Not Visited Complaints Table
 st.markdown("<div style='height:25px;'></div>", unsafe_allow_html=True)
 chart_title_box("🚫 Not Visited Complaints List")
 st.markdown("<div style='height:10px;'></div>", unsafe_allow_html=True)
@@ -237,8 +236,18 @@ not_visited_df = filtered[filtered['C_Job_Status'] == "Not Visited Yet"]
 
 if not not_visited_df.empty:
     # Select and rename columns
-    display_df = not_visited_df[['S_Num', 'Job_Type', 'Complaint_Reg_Date',  'Customer_name', 'address', 'Mobile_number', 'Product_classification', 'issue_history', 
-                                'complaint_channel', 'Technician_Name']].copy()
+    display_df = not_visited_df[[
+        'S_Num', 
+        'Job_Type', 
+        'Complaint_Reg_Date', 
+        'Customer_name', 
+        'address', 
+        'Mobile_number', 
+        'Product_classification', 
+        'issue_history', 
+        'complaint_channel', 
+        'Technician_Name'
+    ]].copy()
     
     # Format date properly
     display_df['Complaint_Reg_Date'] = pd.to_datetime(display_df['Complaint_Reg_Date']).dt.strftime('%d-%b-%Y')
@@ -248,13 +257,13 @@ if not not_visited_df.empty:
         'S_Num': 'Complaint ID',
         'Job_Type': 'Job Type',
         'Complaint_Reg_Date': 'Registration Date',
-        'Customer_name': 'Name',
+        'Customer_name': 'Customer Name',
         'address': 'Address',
-        'Mobile_number': 'Mobile',
+        'Mobile_number': 'Mobile Number',
         'Product_classification': 'Product',
-        'issue_history': 'Issue',
+        'issue_history': 'Issue History',
         'complaint_channel': 'Complaint Channel',
-        'Technician_Name': 'Technician'      
+        'Technician_Name': 'Technician'
     }, inplace=True)
     
     # Display the table with alternating row colors
@@ -264,7 +273,9 @@ if not not_visited_df.empty:
         width=1200,
         column_config={
             "Complaint ID": st.column_config.NumberColumn(format="%d"),
-            "Registration Date": st.column_config.DateColumn(format="DD MMM YYYY")
+            "Registration Date": st.column_config.DateColumn(format="DD MMM YYYY"),
+            "Mobile Number": st.column_config.TextColumn(),
+            "Issue History": st.column_config.TextColumn(width="large")
         }
     )
     
@@ -278,5 +289,3 @@ if not not_visited_df.empty:
     )
 else:
     st.info("No 'Not Visited' complaints found with the current filters.")
-
-
