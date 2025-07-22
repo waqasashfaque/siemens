@@ -6,8 +6,8 @@ from datetime import datetime
 from koboextractor import KoboExtractor
 
 # USERNAME and PASSWORD 
-USER = "admin"
-PASS = "mypassword"
+USER = st.secrets["USER"]
+PASS = st.secrets["PASS"]
 
 if 'auth' not in st.session_state:
     st.session_state['auth'] = False
