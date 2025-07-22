@@ -239,10 +239,15 @@ if not filtered.empty:
         st.plotly_chart(fig4, use_container_width=True, config={"displayModeBar": False})
 #else:
    #st.warning("No data available for selected filters.")
-# Add this code at the end of your Streamlit app, after the charts
 
 # Not Visited Complaints Table
+
+#st.markdown("<div style='height:25px;'></div>", unsafe_allow_html=True)
+#chart_title_box("🚫 Not Visited Complaints List")
+#st.markdown("<div style='height:10px;'></div>", unsafe_allow_html=True)
+
 # Not Visited Complaints Table
+
 st.markdown("<div style='height:25px;'></div>", unsafe_allow_html=True)
 chart_title_box("🚫 Not Visited Complaints List")
 st.markdown("<div style='height:10px;'></div>", unsafe_allow_html=True)
@@ -278,118 +283,75 @@ if not not_visited_df.empty:
         'issue_history': 'Issue History'
     }, inplace=True)
     
-    # Custom CSS for the table
+    # Custom CSS for perfect table formatting
     st.markdown("""
     <style>
         /* Blue header with white text */
-        .custom-table thead tr th {
+        .dataframe thead tr {
             background-color: #1976d2 !important;
+        }
+        .dataframe thead tr th {
             color: white !important;
-            font-weight: bold;
-            position: sticky;
-            top: 0;
+            font-weight: bold !important;
+            text-align: center !important;
         }
         
-        /* Row styling */
-        .custom-table tbody tr:nth-child(even) {
-            background-color: #f9f9f9;
-        }
-        
-        .custom-table tbody tr:hover {
-            background-color: #f0f0f0;
-        }
-        
-        /* Address column - wrap text and adjust height */
-        .custom-table .address-cell {
+        /* Wrap text in Address column and adjust row height */
+        .dataframe tbody tr td:nth-child(5) {
             white-space: normal !important;
-            word-wrap: break-word;
-            max-width: 250px;
-            min-width: 150px;
-            line-height: 1.4;
+            word-wrap: break-word !important;
+            max-width: 250px !important;
+            min-width: 150px !important;
+            line-height: 1.5 !important;
+            padding: 8px 12px !important;
         }
         
-        /* Set column widths */
-        .custom-table .complaint-id {
-            width: 80px;
-        }
+        /* Set fixed widths for other columns */
+        .dataframe th:nth-child(1) { width: 80px !important; }  /* Complaint ID */
+        .dataframe th:nth-child(2) { width: 100px !important; } /* Job Type */
+        .dataframe th:nth-child(3) { width: 120px !important; } /* Registration Date */
+        .dataframe th:nth-child(4) { width: 150px !important; } /* Customer Name */
+        .dataframe th:nth-child(5) { width: 250px !important; } /* Address */
+        .dataframe th:nth-child(6) { width: 120px !important; } /* Mobile Number */
+        .dataframe th:nth-child(7) { width: 150px !important; } /* Product */
+        .dataframe th:nth-child(8) { width: 300px !important; } /* Issue History */
         
-        .custom-table .job-type {
-            width: 100px;
-        }
-        
-        .custom-table .reg-date {
-            width: 120px;
-        }
-        
-        .custom-table .customer-name {
-            width: 150px;
-        }
-        
-        .custom-table .mobile {
-            width: 120px;
-        }
-        
-        .custom-table .product {
-            width: 120px;
-        }
-        
-        .custom-table .issue-history {
-            white-space: normal !important;
-            word-wrap: break-word;
-            max-width: 300px;
-            min-width: 200px;
-            line-height: 1.4;
-        }
-        
-        /* Make table full width */
-        .custom-table {
+        /* Remove horizontal scroll */
+        .dataframe {
             width: 100% !important;
+            table-layout: fixed !important;
         }
         
-        /* Container to prevent horizontal scroll */
-        .table-container {
-            width: 100%;
-            overflow-x: auto;
+        /* Center-align specific columns */
+        .dataframe td:nth-child(1),
+        .dataframe td:nth-child(2),
+        .dataframe td:nth-child(3),
+        .dataframe td:nth-child(6) {
+            text-align: center !important;
+        }
+        
+        /* Add border to table */
+        .dataframe {
+            border: 1px solid #ddd !important;
+            border-collapse: collapse !important;
+        }
+        
+        .dataframe th, .dataframe td {
+            border: 1px solid #ddd !important;
+        }
+        
+        /* Alternating row colors */
+        .dataframe tr:nth-child(even) {
+            background-color: #f9f9f9 !important;
         }
     </style>
     """, unsafe_allow_html=True)
     
-    # Display the table with custom styling
+    # Display the table with perfect formatting
     st.dataframe(
         display_df,
         height=min(500, 35 * (len(display_df) + 1)),
-        use_container_width=True,
-        column_config={
-            "Complaint ID": st.column_config.NumberColumn(
-                format="%d",
-                width="small",
-                help="Complaint identification number"
-            ),
-            "Job Type": st.column_config.TextColumn(
-                width="medium"
-            ),
-            "Registration Date": st.column_config.DateColumn(
-                format="DD MMM YYYY",
-                width="medium"
-            ),
-            "Customer Name": st.column_config.TextColumn(
-                width="medium"
-            ),
-            "Address": st.column_config.TextColumn(
-                width="large",
-                help="Customer address"
-            ),
-            "Mobile Number": st.column_config.TextColumn(
-                width="medium"
-            ),
-            "Product": st.column_config.TextColumn(
-                width="medium"
-            ),
-            "Issue History": st.column_config.TextColumn(
-                width="large",
-                help="Description of the issue"
-            )
-        }
+        use_container_width=True
     )
     
     # Add download button for the table
