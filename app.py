@@ -251,47 +251,29 @@ not_visited_df = filtered[filtered['C_Job_Status'] == "Not Visited Yet"]
 
 if not not_visited_df.empty:
     # Select and rename columns
-    display_df = not_visited_df[[
-        'S_Num', 
-        'Job_Type', 
-        'Complaint_Reg_Date', 
-        'Customer_name', 
-        'address', 
-        'Mobile_number', 
-        'Product_classification', 
-        'issue_history'
-    ]].copy()
+    display_df = not_visited_df[['S_Num', 'Job_Type', 'Complaint_Reg_Date', 'Customer_name', 'address', 'Mobile_number', 'Product_classification', 'issue_history']].copy()
     
     # Format date properly
     display_df['Complaint_Reg_Date'] = pd.to_datetime(display_df['Complaint_Reg_Date']).dt.strftime('%d-%b-%Y')
     
     # Rename columns for better display
-    display_df.rename(columns={
-        'S_Num': 'Complaint ID',
-        'Job_Type': 'Job Type',
-        'Complaint_Reg_Date': 'Registration Date',
-        'Customer_name': 'Customer Name',
-        'address': 'Address',
-        'Mobile_number': 'Mobile Number',
-        'Product_classification': 'Product',
-        'issue_history': 'Issue History'
-    }, inplace=True)
+    display_df.rename(columns={'S_Num': 'Complaint ID','Job_Type': 'Job Type','Complaint_Reg_Date': 'Registration Date', 'Customer_name': 'Customer Name',
+        'address': 'Address', 'Mobile_number': 'Mobile Number','Product_classification': 'Product','issue_history': 'Issue History'}, inplace=True)
     
     # Custom CSS for perfect table formatting
     st.markdown("""
     <style>
-        /* Blue header with white text */
-        table.dataframe thead tr {
+        /* BLUE HEADER WITH WHITE BOLD TEXT */
+        div[data-testid="stDataFrame"] table thead tr th {
             background-color: #1976d2 !important;
-        }
-        table.dataframe thead tr th {
             color: white !important;
             font-weight: bold !important;
             text-align: center !important;
+            font-size: 16px !important;
         }
         
         /* Wrap text in Address column and adjust row height */
-        table.dataframe tbody tr td:nth-child(5) {
+        div[data-testid="stDataFrame"] table tbody tr td:nth-child(5) {
             white-space: normal !important;
             word-wrap: break-word !important;
             max-width: 250px !important;
@@ -301,41 +283,42 @@ if not not_visited_df.empty:
         }
         
         /* Set fixed widths for other columns */
-        table.dataframe th:nth-child(1) { width: 80px !important; }  /* Complaint ID */
-        table.dataframe th:nth-child(2) { width: 100px !important; } /* Job Type */
-        table.dataframe th:nth-child(3) { width: 120px !important; } /* Registration Date */
-        table.dataframe th:nth-child(4) { width: 150px !important; } /* Customer Name */
-        table.dataframe th:nth-child(5) { width: 250px !important; } /* Address */
-        table.dataframe th:nth-child(6) { width: 120px !important; } /* Mobile Number */
-        table.dataframe th:nth-child(7) { width: 150px !important; } /* Product */
-        table.dataframe th:nth-child(8) { width: 300px !important; } /* Issue History */
+        div[data-testid="stDataFrame"] table th:nth-child(1) { width: 80px !important; }  /* Complaint ID */
+        div[data-testid="stDataFrame"] table th:nth-child(2) { width: 100px !important; } /* Job Type */
+        div[data-testid="stDataFrame"] table th:nth-child(3) { width: 120px !important; } /* Registration Date */
+        div[data-testid="stDataFrame"] table th:nth-child(4) { width: 150px !important; } /* Customer Name */
+        div[data-testid="stDataFrame"] table th:nth-child(5) { width: 250px !important; } /* Address */
+        div[data-testid="stDataFrame"] table th:nth-child(6) { width: 120px !important; } /* Mobile Number */
+        div[data-testid="stDataFrame"] table th:nth-child(7) { width: 150px !important; } /* Product */
+        div[data-testid="stDataFrame"] table th:nth-child(8) { width: 300px !important; } /* Issue History */
         
         /* Remove horizontal scroll */
-        table.dataframe {
+        div[data-testid="stDataFrame"] table {
             width: 100% !important;
             table-layout: fixed !important;
         }
         
         /* Center-align specific columns */
-        table.dataframe td:nth-child(1),
-        table.dataframe td:nth-child(2),
-        table.dataframe td:nth-child(3),
-        table.dataframe td:nth-child(6) {
+        div[data-testid="stDataFrame"] table td:nth-child(1),
+        div[data-testid="stDataFrame"] table td:nth-child(2),
+        div[data-testid="stDataFrame"] table td:nth-child(3),
+        div[data-testid="stDataFrame"] table td:nth-child(6) {
             text-align: center !important;
         }
         
         /* Add border to table */
-        table.dataframe {
+        div[data-testid="stDataFrame"] table {
             border: 1px solid #ddd !important;
             border-collapse: collapse !important;
         }
         
-        table.dataframe th, table.dataframe td {
+        div[data-testid="stDataFrame"] table th, 
+        div[data-testid="stDataFrame"] table td {
             border: 1px solid #ddd !important;
         }
         
         /* Alternating row colors */
-        table.dataframe tr:nth-child(even) {
+        div[data-testid="stDataFrame"] table tr:nth-child(even) {
             background-color: #f9f9f9 !important;
         }
     </style>
@@ -351,7 +334,7 @@ if not not_visited_df.empty:
     # Add download button for the table
     csv = display_df.to_csv(index=False).encode('utf-8')
     st.download_button(
-        label="📥 Download Not Visited Complaints",
+        label="📥 Download the list of "Not Visited Complaints" by clicking here",
         data=csv,
         file_name="not_visited_complaints.csv",
         mime="text/csv",
