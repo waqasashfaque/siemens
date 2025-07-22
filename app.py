@@ -259,9 +259,9 @@ if not not_visited_df.empty:
         'address', 
         'Mobile_number', 
         'Product_classification', 
-        'issue_history', 
-        'complaint_channel', 
-        'Technician_Name'
+        'issue_history' 
+        #'complaint_channel', 
+        #'Technician_Name'
     ]].copy()
     
     # Format date properly
@@ -276,7 +276,7 @@ if not not_visited_df.empty:
         'address': 'Address',
         'Mobile_number': 'Mobile Number',
         'Product_classification': 'Product',
-        'issue_history': 'Issue History',
+        'issue_history': 'Issue History'
         #'complaint_channel': 'Complaint Channel',
         #'Technician_Name': 'Technician'
     }, inplace=True)
