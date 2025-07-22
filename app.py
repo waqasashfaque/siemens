@@ -52,9 +52,9 @@ def process_kobo_data(data1, data2):
 
     # In the process_kobo_data function:
     if not df1.empty:
-    df1.columns = df1.columns.str.replace('Registration/', '')
+        df1.columns = df1.columns.str.replace('Registration/', '')
     # Add all required columns
-    selected_cols_df1 = [
+        selected_cols_df1 = [
         'S_Num', 
         'Job_Type', 
         'Complaint_Reg_Date', 
@@ -64,7 +64,7 @@ def process_kobo_data(data1, data2):
         'Product_classification', 
         'issue_history', 
         'complaint_channel'
-    ]
+        ]
     df1 = df1[[col for col in selected_cols_df1 if col in df1.columns]]
 
     if not df2.empty:
