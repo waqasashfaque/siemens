@@ -334,7 +334,7 @@ if not not_visited_df.empty:
     # Add download button for the table
     csv = display_df.to_csv(index=False).encode('utf-8')
     st.download_button(
-        label="📥 Download the list of "Not Visited Complaints" by clicking here",
+        label="📥 Download the list of Not Visited Complaints by clicking here",
         data=csv,
         file_name="not_visited_complaints.csv",
         mime="text/csv",
