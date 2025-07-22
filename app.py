@@ -242,6 +242,7 @@ if not filtered.empty:
 # Add this code at the end of your Streamlit app, after the charts
 
 # Not Visited Complaints Table
+# Not Visited Complaints Table
 st.markdown("<div style='height:25px;'></div>", unsafe_allow_html=True)
 chart_title_box("🚫 Not Visited Complaints List")
 st.markdown("<div style='height:10px;'></div>", unsafe_allow_html=True)
@@ -259,9 +260,7 @@ if not not_visited_df.empty:
         'address', 
         'Mobile_number', 
         'Product_classification', 
-        'issue_history' 
-        #'complaint_channel', 
-        #'Technician_Name'
+        'issue_history'
     ]].copy()
     
     # Format date properly
@@ -277,20 +276,119 @@ if not not_visited_df.empty:
         'Mobile_number': 'Mobile Number',
         'Product_classification': 'Product',
         'issue_history': 'Issue History'
-        #'complaint_channel': 'Complaint Channel',
-        #'Technician_Name': 'Technician'
     }, inplace=True)
     
-    # Display the table with alternating row colors
+    # Custom CSS for the table
+    st.markdown("""
+    <style>
+        /* Blue header with white text */
+        .custom-table thead tr th {
+            background-color: #1976d2 !important;
+            color: white !important;
+            font-weight: bold;
+            position: sticky;
+            top: 0;
+        }
+        
+        /* Row styling */
+        .custom-table tbody tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        
+        .custom-table tbody tr:hover {
+            background-color: #f0f0f0;
+        }
+        
+        /* Address column - wrap text and adjust height */
+        .custom-table .address-cell {
+            white-space: normal !important;
+            word-wrap: break-word;
+            max-width: 250px;
+            min-width: 150px;
+            line-height: 1.4;
+        }
+        
+        /* Set column widths */
+        .custom-table .complaint-id {
+            width: 80px;
+        }
+        
+        .custom-table .job-type {
+            width: 100px;
+        }
+        
+        .custom-table .reg-date {
+            width: 120px;
+        }
+        
+        .custom-table .customer-name {
+            width: 150px;
+        }
+        
+        .custom-table .mobile {
+            width: 120px;
+        }
+        
+        .custom-table .product {
+            width: 120px;
+        }
+        
+        .custom-table .issue-history {
+            white-space: normal !important;
+            word-wrap: break-word;
+            max-width: 300px;
+            min-width: 200px;
+            line-height: 1.4;
+        }
+        
+        /* Make table full width */
+        .custom-table {
+            width: 100% !important;
+        }
+        
+        /* Container to prevent horizontal scroll */
+        .table-container {
+            width: 100%;
+            overflow-x: auto;
+        }
+    </style>
+    """, unsafe_allow_html=True)
+    
+    # Display the table with custom styling
     st.dataframe(
         display_df,
         height=min(500, 35 * (len(display_df) + 1)),
-        width=1200,
+        use_container_width=True,
         column_config={
-            "Complaint ID": st.column_config.NumberColumn(format="%d"),
-            "Registration Date": st.column_config.DateColumn(format="DD MMM YYYY"),
-            "Mobile Number": st.column_config.TextColumn(),
-            "Issue History": st.column_config.TextColumn(width="large")
+            "Complaint ID": st.column_config.NumberColumn(
+                format="%d",
+                width="small",
+                help="Complaint identification number"
+            ),
+            "Job Type": st.column_config.TextColumn(
+                width="medium"
+            ),
+            "Registration Date": st.column_config.DateColumn(
+                format="DD MMM YYYY",
+                width="medium"
+            ),
+            "Customer Name": st.column_config.TextColumn(
+                width="medium"
+            ),
+            "Address": st.column_config.TextColumn(
+                width="large",
+                help="Customer address"
+            ),
+            "Mobile Number": st.column_config.TextColumn(
+                width="medium"
+            ),
+            "Product": st.column_config.TextColumn(
+                width="medium"
+            ),
+            "Issue History": st.column_config.TextColumn(
+                width="large",
+                help="Description of the issue"
+            )
         }
     )
     
@@ -300,7 +398,8 @@ if not not_visited_df.empty:
         label="📥 Download Not Visited Complaints",
         data=csv,
         file_name="not_visited_complaints.csv",
-        mime="text/csv"
+        mime="text/csv",
+        use_container_width=True
     )
 else:
     st.info("No 'Not Visited' complaints found with the current filters.")
