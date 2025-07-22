@@ -277,8 +277,8 @@ if not not_visited_df.empty:
         'Mobile_number': 'Mobile Number',
         'Product_classification': 'Product',
         'issue_history': 'Issue History',
-        'complaint_channel': 'Complaint Channel',
-        'Technician_Name': 'Technician'
+        #'complaint_channel': 'Complaint Channel',
+        #'Technician_Name': 'Technician'
     }, inplace=True)
     
     # Display the table with alternating row colors
