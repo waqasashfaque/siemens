@@ -240,11 +240,7 @@ if not filtered.empty:
 #else:
    #st.warning("No data available for selected filters.")
 
-# Not Visited Complaints Table
 
-#st.markdown("<div style='height:25px;'></div>", unsafe_allow_html=True)
-#chart_title_box("🚫 Not Visited Complaints List")
-#st.markdown("<div style='height:10px;'></div>", unsafe_allow_html=True)
 
 # Not Visited Complaints Table
 
