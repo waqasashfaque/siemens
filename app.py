@@ -50,6 +50,7 @@ def process_kobo_data(data1, data2):
       #  selected_cols_df1 = ['S_Num', 'Job_Type', 'Complaint_Reg_Date', 'Product_classification', 'complaint_channel']    
        # df1 = df1[[col for col in selected_cols_df1 if col in df1.columns]]
 # In the process_kobo_data function:
+
 if not df1.empty:
     df1.columns = df1.columns.str.replace('Registration/', '')
     # Add all required columns
@@ -66,7 +67,7 @@ if not df1.empty:
     ]
     df1 = df1[[col for col in selected_cols_df1 if col in df1.columns]]
 
-      if not df2.empty:
+if not df2.empty:
         df2.columns = df2.columns.str.replace('C_Followup/', '')
         df2.columns = df2.columns.str.replace('C_Registration/', '')
         df2.columns = df2.columns.str.replace('C_invoice_group/', '')
