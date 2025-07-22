@@ -222,3 +222,53 @@ if not filtered.empty:
         st.plotly_chart(fig4, use_container_width=True, config={"displayModeBar": False})
 #else:
    #st.warning("No data available for selected filters.")
+
+
+# Add this code at the end of your Streamlit app, after the charts
+
+# Not Visited Complaints Table to show after the dashboard
+st.markdown("<div style='height:25px;'></div>", unsafe_allow_html=True)
+chart_title_box("🚫 Not Visited Complaints List")
+st.markdown("<div style='height:10px;'></div>", unsafe_allow_html=True)
+
+# Filter for not visited complaints
+not_visited_df = filtered[filtered['C_Job_Status'] == "Not Visited Yet"]
+
+if not not_visited_df.empty:
+    # Select and rename columns
+    display_df = not_visited_df[['S_Num', 'Complaint_Reg_Date', 'Product_classification', 
+                                'complaint_channel', 'Technician_Name']].copy()
+    
+    # Format date properly
+    display_df['Complaint_Reg_Date'] = pd.to_datetime(display_df['Complaint_Reg_Date']).dt.strftime('%d-%b-%Y')
+    
+    # Rename columns for better display
+    display_df.rename(columns={
+        'S_Num': 'Complaint ID',
+        'Complaint_Reg_Date': 'Registration Date',
+        'Product_classification': 'Product',
+        'complaint_channel': 'Complaint Channel',
+        'Technician_Name': 'Technician'
+    }, inplace=True)
+    
+    # Display the table with alternating row colors
+    st.dataframe(
+        display_df,
+        height=min(500, 35 * (len(display_df) + 1)),
+        width=1200,
+        column_config={
+            "Complaint ID": st.column_config.NumberColumn(format="%d"),
+            "Registration Date": st.column_config.DateColumn(format="DD MMM YYYY")
+        }
+    )
+    
+    # Add download button for the table
+    csv = display_df.to_csv(index=False).encode('utf-8')
+    st.download_button(
+        label="📥 Download Not Visited Complaints",
+        data=csv,
+        file_name="not_visited_complaints.csv",
+        mime="text/csv"
+    )
+else:
+    st.info("No 'Not Visited' complaints found with the current filters.")
