@@ -45,13 +45,28 @@ def process_kobo_data(data1, data2):
     df1 = pd.json_normalize(data1.get('results', []))
     df2 = pd.json_normalize(data2.get('results', []))
 
-    if not df1.empty:
-        df1.columns = df1.columns.str.replace('Registration/', '')
-        selected_cols_df1 = ['S_Num', 'Job_Type', 'Complaint_Reg_Date', 'Product_classification', 'complaint_channel']
-        #selected_cols_df1 = ['S_Num', 'Job_Type', 'Complaint_Reg_Date', 'Customer_name', 'address', 'Mobile_number','Product_classification', 'complaint_channel']       
-        df1 = df1[[col for col in selected_cols_df1 if col in df1.columns]]
+    #if not df1.empty:
+     #   df1.columns = df1.columns.str.replace('Registration/', '')
+      #  selected_cols_df1 = ['S_Num', 'Job_Type', 'Complaint_Reg_Date', 'Product_classification', 'complaint_channel']    
+       # df1 = df1[[col for col in selected_cols_df1 if col in df1.columns]]
+# In the process_kobo_data function:
+if not df1.empty:
+    df1.columns = df1.columns.str.replace('Registration/', '')
+    # Add all required columns
+    selected_cols_df1 = [
+        'S_Num', 
+        'Job_Type', 
+        'Complaint_Reg_Date', 
+        'Customer_name', 
+        'address', 
+        'Mobile_number', 
+        'Product_classification', 
+        'issue_history', 
+        'complaint_channel'
+    ]
+    df1 = df1[[col for col in selected_cols_df1 if col in df1.columns]]
 
-    if not df2.empty:
+      if not df2.empty:
         df2.columns = df2.columns.str.replace('C_Followup/', '')
         df2.columns = df2.columns.str.replace('C_Registration/', '')
         df2.columns = df2.columns.str.replace('C_invoice_group/', '')
@@ -223,7 +238,6 @@ if not filtered.empty:
         st.plotly_chart(fig4, use_container_width=True, config={"displayModeBar": False})
 #else:
    #st.warning("No data available for selected filters.")
-
 # Add this code at the end of your Streamlit app, after the charts
 
 # Not Visited Complaints Table
