@@ -130,7 +130,7 @@ st.info(f"You are logged in as: {st.session_state['username']}")
 #    filtered = filtered[filtered['complaint_channel'].isin(selected_channel)]
 
 # ------- UPDATED FILTER LOGIC START ---------
-actual_technicians = ["Tahir_Mehmood","Adil_Shehzad","Haseeb_Ullah","Hassnain_Khan","Sami_ul_Haq","Waseem_Khan"]
+actual_technicians = ["Tahir_Mahmood","Adil_Shehzad","Haseeb_Ullah","Hassnain_Khan","Sami_ul_Haq","Waseem_Khan", "Hafiz_Baqir_Zaman"]
 channels = ['All Channels'] + sorted(df['complaint_channel'].dropna().unique())
 
 years = ['All Years'] + sorted(df['Year'].dropna().unique().tolist())
@@ -143,7 +143,7 @@ with f2:
     selected_month = st.multiselect("Select Month", months, default='All Months')
 with f3:
     # ADMIN or All_Technicians: All names enabled, USERS: filter locked
-    if st.session_state['username'] in ["admin", "All_Technicians", "Tahir_Mahmood" "Adil_Shehzad" "Haseeb_Ullah" "Hassnain_Khan" "Sami_ul_Haq" "Waseem_Khan"]:
+    if st.session_state['username'] in ["admin", "All_Technicians", "Tahir_Mahmood" "Adil_Shehzad" "Haseeb_Ullah" "Hassnain_Khan" "Sami_ul_Haq" "Waseem_Khan","Hafiz_Baqir_Zaman"]:
         selected_technician = st.multiselect("Select Technician",['All Technicians'] + actual_technicians,default='All Technicians')
     else:
         selected_technician = st.multiselect("Select Technician",[st.session_state['username']],default=st.session_state['username'],disabled=True)
