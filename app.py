@@ -7,7 +7,6 @@ from koboextractor import KoboExtractor
 
 # Adding all users
 USERS = st.secrets["users"]
-
 def login_form():
     st.title("Login")
     username = st.text_input("Username")
@@ -20,11 +19,10 @@ def login_form():
             st.rerun()
         else:
             st.error("Invalid credentials!")
-
 if not st.session_state.get('auth', False):
     login_form()
     st.stop()
- 
+
 # --- API Configuration from Streamlit secrets ---
 my_token = st.secrets["MY_TOKEN"]
 form_id_main = st.secrets["FORM_ID_MAIN"]
@@ -73,9 +71,7 @@ def process_kobo_data(data1, data2):
     merged.dropna(subset=['Complaint_Reg_Date'], inplace=True)
     merged['MONTH'] = merged['Complaint_Reg_Date'].dt.strftime('%b')
     # Set MONTH as categorical with calendar order
-    month_order = [
-        'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun','Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
-    ]
+    month_order = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun','Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
     merged['MONTH'] = pd.Categorical(merged['MONTH'], categories=month_order, ordered=True)
     merged['Year'] = merged['Complaint_Reg_Date'].dt.year
     merged['Technician_Name'] = merged['C_Technician_Did'].fillna('Not Assigned')
@@ -87,7 +83,6 @@ def process_kobo_data(data1, data2):
 
 if st.button("🔄 Sync Latest Data"):
     st.cache_data.clear()
-
 try:
     data1, data2 = fetch_kobo_data()
     df = process_kobo_data(data1, data2)
@@ -97,37 +92,9 @@ except Exception as e:
 
 st.set_page_config(page_title="Complaint Dashboard", layout="wide")
 st.title("📊 Home Appliances Care - Complaints Management System Dashboard")
-st.info(f"You are logged in as: {st.session_state['username']}")
-
-# Filters (under the title and above KPIs)
-#st.subheader("🔎 Filters")
-
-#years = ['All Years'] + sorted(df['Year'].dropna().unique().tolist())
-#months = ['All Months'] + [
- #   'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun','Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
-#technicians = ['All Technicians'] + sorted(df['Technician_Name'].unique())
-#channels = ['All Channels'] + sorted(df['complaint_channel'].dropna().unique())
-
-#f1, f2, f3, f4 = st.columns([2,2,2,2])
-#with f1:
- #   selected_year = st.multiselect("Select Year", years, default='All Years')
-#with f2:
- #   selected_month = st.multiselect("Select Month", months, default='All Months')
-#with f3:
- #   selected_technician = st.multiselect("Select Technician", technicians, default='All Technicians')
-#with f4:
- #   selected_channel = st.multiselect("Select Complaint Channel", channels, default='All Channels')
-
-# Filter logic
-#filtered = df.copy()
-#if 'All Years' not in selected_year:
- #   filtered = filtered[filtered['Year'].isin(selected_year)]
-#if 'All Months' not in selected_month:
-#    filtered = filtered[filtered['MONTH'].isin(selected_month)]
-#if 'All Technicians' not in selected_technician:
- #   filtered = filtered[filtered['Technician_Name'].isin(selected_technician)]
-#if 'All Channels' not in selected_channel:
-#    filtered = filtered[filtered['complaint_channel'].isin(selected_channel)]
+#st.info(f"You are logged in as: {st.session_state['username']}")
+st.info(f"You are logged in as: {st.session_state['username']}. You can only view your own relevant data.")
+#st.info(f"Logged in as: {st.session_state['username']}. Only your relevant data is visible.")
 
 # ------- UPDATED FILTER LOGIC START ---------
 actual_technicians = ["Tahir_Mahmood","Adil_Shehzad","Haseeb_Ullah","Hassnain_Khan","Sami_ul_Haq","Waseem_Khan", "Hafiz_Baqir_Zaman"]
@@ -142,6 +109,7 @@ with f1:
 with f2:
     selected_month = st.multiselect("Select Month", months, default='All Months')
 with f3:
+   
     # ADMIN or All_Technicians: All names enabled, USERS: filter locked
     if st.session_state['username'] in ["admin", "All_Technicians", "Tahir_Mahmood" "Adil_Shehzad" "Haseeb_Ullah" "Hassnain_Khan" "Sami_ul_Haq" "Waseem_Khan","Hafiz_Baqir_Zaman"]:
         selected_technician = st.multiselect("Select Technician",['All Technicians'] + actual_technicians,default='All Technicians')
