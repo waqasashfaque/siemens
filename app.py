@@ -94,8 +94,11 @@ st.set_page_config(page_title="Complaint Dashboard", layout="wide")
 st.title("📊 Home Appliances Care - Complaints Management System Dashboard")
 #st.info(f"You are logged in as: {st.session_state['username']}")
 #st.info(f"You are logged in as: {st.session_state['username']}. You can only view your own relevant data.")
-st.info(f"Logged in as: {st.session_state['username']}. Only your relevant data is visible.")
-
+#st.info(f"Logged in as: {st.session_state['username']}. Only your relevant data is visible.")
+if st.session_state['username'].lower() == "admin":
+    st.info("Logged in as: Admin. You can view complete data and all visualizations.")
+else:
+    st.info(f"Logged in as: {st.session_state['username']}. Only your relevant data is visible to you.")
 # ------- UPDATED FILTER LOGIC START ---------
 actual_technicians = ["Tahir_Mahmood","Adil_Shehzad","Haseeb_Ullah","Hassnain_Khan","Sami_ul_Haq","Waseem_Khan", "Hafiz_Baqir_Zaman"]
 channels = ['All Channels'] + sorted(df['complaint_channel'].dropna().unique())
