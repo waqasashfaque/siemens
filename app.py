@@ -6,11 +6,30 @@ from datetime import datetime
 from koboextractor import KoboExtractor
 
 # USERNAME and PASSWORD 
-USER = st.secrets["USER"]
-PASS = st.secrets["PASS"]
+#USER = st.secrets["USER"]
+#PASS = st.secrets["PASS"]
 
-if 'auth' not in st.session_state:
-    st.session_state['auth'] = False
+#if 'auth' not in st.session_state:
+ #   st.session_state['auth'] = False
+
+#def login_form():
+ #   st.title("Login")
+  #  username = st.text_input("Username")
+   # password = st.text_input("Password", type="password")
+   # login_btn = st.button("Login")
+   # if login_btn:
+    #    if username == USER and password == PASS:
+     #       st.session_state['auth'] = True
+      #      st.rerun()  # yehi pe rerun!
+       # else:
+        #    st.error("Invalid credentials!")
+
+#if not st.session_state['auth']:
+ #   login_form()
+  #  st.stop()
+
+#Adding all users
+USERS = st.secrets["users"]
 
 def login_form():
     st.title("Login")
@@ -18,16 +37,17 @@ def login_form():
     password = st.text_input("Password", type="password")
     login_btn = st.button("Login")
     if login_btn:
-        if username == USER and password == PASS:
+        if username in USERS and password == USERS[username]:
             st.session_state['auth'] = True
-            st.rerun()  # yehi pe rerun!
+            st.session_state['username'] = username
+            st.rerun()
         else:
             st.error("Invalid credentials!")
 
 if not st.session_state['auth']:
     login_form()
     st.stop()
-  
+
 # --- API Configuration from Streamlit secrets ---
 my_token = st.secrets["MY_TOKEN"]
 form_id_main = st.secrets["FORM_ID_MAIN"]
