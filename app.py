@@ -5,29 +5,6 @@ import requests
 from datetime import datetime
 from koboextractor import KoboExtractor
 
-# USERNAME and PASSWORD 
-#USER = st.secrets["USER"]
-#PASS = st.secrets["PASS"]
-
-#if 'auth' not in st.session_state:
- #   st.session_state['auth'] = False
-
-#def login_form():
- #   st.title("Login")
-  #  username = st.text_input("Username")
-   # password = st.text_input("Password", type="password")
-   # login_btn = st.button("Login")
-   # if login_btn:
-    #    if username == USER and password == PASS:
-     #       st.session_state['auth'] = True
-      #      st.rerun()  # yehi pe rerun!
-       # else:
-        #    st.error("Invalid credentials!")
-
-#if not st.session_state['auth']:
- #   login_form()
-  #  st.stop()
-
 # Adding all users
 USERS = st.secrets["users"]
 
@@ -65,26 +42,11 @@ def process_kobo_data(data1, data2):
     df1 = pd.json_normalize(data1.get('results', []))
     df2 = pd.json_normalize(data2.get('results', []))
 
-    #if not df1.empty:
-     #   df1.columns = df1.columns.str.replace('Registration/', '')
-      #  selected_cols_df1 = ['S_Num', 'Job_Type', 'Complaint_Reg_Date', 'Product_classification', 'complaint_channel']
-       # df1 = df1[[col for col in selected_cols_df1 if col in df1.columns]]
-
     # In the process_kobo_data function:
     if not df1.empty:
         df1.columns = df1.columns.str.replace('Registration/', '')
     # Add all required columns
-        selected_cols_df1 = [
-        'S_Num', 
-        'Job_Type', 
-        'Complaint_Reg_Date', 
-        'Customer_name', 
-        'address', 
-        'Mobile_number', 
-        'Product_classification', 
-        'issue_history', 
-        'complaint_channel'
-        ]
+        selected_cols_df1 = ['S_Num', 'Job_Type', 'Complaint_Reg_Date', 'Customer_name', 'address', 'Mobile_number', 'Product_classification', 'issue_history', 'complaint_channel']
     df1 = df1[[col for col in selected_cols_df1 if col in df1.columns]]
 
     if not df2.empty:
@@ -140,11 +102,39 @@ st.info(f"You are logged in as: {st.session_state['username']}")
 # Filters (under the title and above KPIs)
 #st.subheader("🔎 Filters")
 
-years = ['All Years'] + sorted(df['Year'].dropna().unique().tolist())
-months = ['All Months'] + [
-    'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun','Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
-technicians = ['All Technicians'] + sorted(df['Technician_Name'].unique())
+#years = ['All Years'] + sorted(df['Year'].dropna().unique().tolist())
+#months = ['All Months'] + [
+ #   'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun','Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+#technicians = ['All Technicians'] + sorted(df['Technician_Name'].unique())
+#channels = ['All Channels'] + sorted(df['complaint_channel'].dropna().unique())
+
+#f1, f2, f3, f4 = st.columns([2,2,2,2])
+#with f1:
+ #   selected_year = st.multiselect("Select Year", years, default='All Years')
+#with f2:
+ #   selected_month = st.multiselect("Select Month", months, default='All Months')
+#with f3:
+ #   selected_technician = st.multiselect("Select Technician", technicians, default='All Technicians')
+#with f4:
+ #   selected_channel = st.multiselect("Select Complaint Channel", channels, default='All Channels')
+
+# Filter logic
+#filtered = df.copy()
+#if 'All Years' not in selected_year:
+ #   filtered = filtered[filtered['Year'].isin(selected_year)]
+#if 'All Months' not in selected_month:
+#    filtered = filtered[filtered['MONTH'].isin(selected_month)]
+#if 'All Technicians' not in selected_technician:
+ #   filtered = filtered[filtered['Technician_Name'].isin(selected_technician)]
+#if 'All Channels' not in selected_channel:
+#    filtered = filtered[filtered['complaint_channel'].isin(selected_channel)]
+
+# ------- UPDATED FILTER LOGIC START ---------
+actual_technicians = ["Tahir_Mehmood","Adil_Shehzad","Haseeb_Ullah","Hassnain_Khan","Sami_ul_Haq","Waseem_Khan"]
 channels = ['All Channels'] + sorted(df['complaint_channel'].dropna().unique())
+
+years = ['All Years'] + sorted(df['Year'].dropna().unique().tolist())
+months = ['All Months'] + ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun','Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
 
 f1, f2, f3, f4 = st.columns([2,2,2,2])
 with f1:
@@ -152,11 +142,14 @@ with f1:
 with f2:
     selected_month = st.multiselect("Select Month", months, default='All Months')
 with f3:
-    selected_technician = st.multiselect("Select Technician", technicians, default='All Technicians')
+    # ADMIN or All_Technicians: All names enabled, USERS: filter locked
+    if st.session_state['username'] in ["admin", "All_Technicians"]:
+        selected_technician = st.multiselect("Select Technician",['All Technicians'] + actual_technicians,default='All Technicians')
+    else:
+        selected_technician = st.multiselect("Select Technician",[st.session_state['username']],default=st.session_state['username'],disabled=True)
 with f4:
     selected_channel = st.multiselect("Select Complaint Channel", channels, default='All Channels')
 
-# Filter logic
 filtered = df.copy()
 if 'All Years' not in selected_year:
     filtered = filtered[filtered['Year'].isin(selected_year)]
@@ -166,6 +159,8 @@ if 'All Technicians' not in selected_technician:
     filtered = filtered[filtered['Technician_Name'].isin(selected_technician)]
 if 'All Channels' not in selected_channel:
     filtered = filtered[filtered['complaint_channel'].isin(selected_channel)]
+
+# ------- UPDATED FILTER LOGIC END ---------
 
 # KPIs as horizontal colored cards (each box different color, white bold text)
 
