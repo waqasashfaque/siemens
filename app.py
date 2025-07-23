@@ -28,7 +28,7 @@ from koboextractor import KoboExtractor
  #   login_form()
   #  st.stop()
 
-#Adding all users
+# Adding all users
 USERS = st.secrets["users"]
 
 def login_form():
@@ -44,10 +44,10 @@ def login_form():
         else:
             st.error("Invalid credentials!")
 
-if not st.session_state['auth']:
+if not st.session_state.get('auth', False):
     login_form()
     st.stop()
-
+ 
 # --- API Configuration from Streamlit secrets ---
 my_token = st.secrets["MY_TOKEN"]
 form_id_main = st.secrets["FORM_ID_MAIN"]
