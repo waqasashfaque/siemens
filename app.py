@@ -135,6 +135,7 @@ except Exception as e:
 
 st.set_page_config(page_title="Complaint Dashboard", layout="wide")
 st.title("📊 Home Appliances Care - Complaints Management System Dashboard")
+st.info(f"You are logged in as: {st.session_state['username']}")
 
 # Filters (under the title and above KPIs)
 #st.subheader("🔎 Filters")
