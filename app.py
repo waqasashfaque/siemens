@@ -93,8 +93,8 @@ except Exception as e:
 st.set_page_config(page_title="Complaint Dashboard", layout="wide")
 st.title("📊 Home Appliances Care - Complaints Management System Dashboard")
 #st.info(f"You are logged in as: {st.session_state['username']}")
-st.info(f"You are logged in as: {st.session_state['username']}. You can only view your own relevant data.")
-#st.info(f"Logged in as: {st.session_state['username']}. Only your relevant data is visible.")
+#st.info(f"You are logged in as: {st.session_state['username']}. You can only view your own relevant data.")
+st.info(f"Logged in as: {st.session_state['username']}. Only your relevant data is visible.")
 
 # ------- UPDATED FILTER LOGIC START ---------
 actual_technicians = ["Tahir_Mahmood","Adil_Shehzad","Haseeb_Ullah","Hassnain_Khan","Sami_ul_Haq","Waseem_Khan", "Hafiz_Baqir_Zaman"]
