@@ -358,3 +358,5 @@ if not not_visited_df.empty:
     )
 else:
     st.info("No 'Not Visited' complaints found with the current filters.")
+
+df['Technician_Name'].unique()
