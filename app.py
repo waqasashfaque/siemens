@@ -243,7 +243,7 @@ if not filtered.empty:
 
 # Not Visited Complaints Table
 st.markdown("<div style='height:25px;'></div>", unsafe_allow_html=True)
-chart_title_box("🚫 List of Complaints, Not Visited by the Technicians")
+chart_title_box("🚫 Pending Complaints – Technician Visit Required")
 st.markdown("<div style='height:10px;'></div>", unsafe_allow_html=True)
 
 # Filter for not visited complaints
@@ -327,7 +327,7 @@ if not not_visited_df.empty:
     # Display the table with perfect formatting
     st.dataframe(
         display_df,
-        height=min(500, 70 * (len(display_df) + 1)),
+        height=min(500, 0 * (len(display_df) + 1)),
         use_container_width=True
     )
     
