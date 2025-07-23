@@ -99,7 +99,10 @@ if st.session_state['username'].lower() == "admin":
     st.info("Logged in as: Admin. You can view complete data and all visualizations.")
 else:
     st.info(f"Logged in as: {st.session_state['username']}. Only your relevant data is visible to you.")
+
 # ------- UPDATED FILTER LOGIC START ---------
+#For this line add all users inside this code if any new user is creatd then add his name inside this this will add new name into drop down of technician name filter
+
 actual_technicians = ["Tahir_Mahmood","Adil_Shehzad","Haseeb_Ullah","Hassnain_Khan","Sami_ul_Haq","Waseem_Khan", "Hafiz_Baqir_Zaman","Others_(Specify)"]
 channels = ['All Channels'] + sorted(df['complaint_channel'].dropna().unique())
 
@@ -114,8 +117,9 @@ with f2:
 with f3:
    
     # ADMIN or All_Technicians: All names enabled, USERS: filter locked
+
     if st.session_state['username'] in ["admin", "All_Technicians", "Tahir_Mahmood" "Adil_Shehzad" "Haseeb_Ullah" "Hassnain_Khan" "Sami_ul_Haq" "Waseem_Khan","Hafiz_Baqir_Zaman","Others_(Specify)"]:
-        selected_technician = st.multiselect("Select Technician",['All Technicians'] + actual_technicians,default='All Technicians')
+        selected_technician = st.multiselect("Select Technician",['All Technicians'] + actual_technicians, default='All Technicians')
     else:
         selected_technician = st.multiselect("Select Technician",[st.session_state['username']],default=st.session_state['username'],disabled=True)
 with f4:
