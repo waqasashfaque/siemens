@@ -327,7 +327,7 @@ if not not_visited_df.empty:
     # Display the table with perfect formatting
     st.dataframe(
         display_df,
-        height=min(500, 0 * (len(display_df) + 1)),
+        height=min(500, 35 * (len(display_df) + 1)),
         use_container_width=True
     )
     
