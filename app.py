@@ -5,11 +5,14 @@ import requests
 from datetime import datetime
 from koboextractor import KoboExtractor
 
-# Adding all users
+
+# Adding all users, all users will be appear as dropdown 
 USERS = st.secrets["users"]
+
 def login_form():
     st.title("Login")
-    username = st.text_input("Username")
+    usernames = list(USERS.keys())
+    username = st.selectbox("Select Username", usernames)
     password = st.text_input("Password", type="password")
     login_btn = st.button("Login")
     if login_btn:
@@ -19,6 +22,7 @@ def login_form():
             st.rerun()
         else:
             st.error("Invalid credentials!")
+
 if not st.session_state.get('auth', False):
     login_form()
     st.stop()
