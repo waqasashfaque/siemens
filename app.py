@@ -5,6 +5,7 @@ import requests
 from datetime import datetime
 from koboextractor import KoboExtractor
 
+st.set_page_config(layout="wide", page_title="Complaint Dashboard")
 
 # Adding all users, all users will be appear as dropdown 
 USERS = st.secrets["users"]
@@ -94,7 +95,7 @@ except Exception as e:
     st.error(f"Error occurred: {e}")
     st.stop()
 
-st.set_page_config(page_title="Complaint Dashboard", layout="wide")
+#st.set_page_config(page_title="Complaint Dashboard", layout="wide")
 st.title("📊 Home Appliances Care - Complaints Management System Dashboard")
 #st.info(f"You are logged in as: {st.session_state['username']}")
 #st.info(f"You are logged in as: {st.session_state['username']}. You can only view your own relevant data.")
@@ -329,3 +330,4 @@ if not not_visited_df.empty:
     )
 else:
     st.info("No 'Not Visited' complaints found with the current filters.")
+
