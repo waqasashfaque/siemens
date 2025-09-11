@@ -4,6 +4,40 @@ import plotly.express as px
 import requests
 from datetime import datetime
 from koboextractor import KoboExtractor
+import base64
+
+#--------- Load CSS ----------
+def load_css():
+    with open("login.css", "r") as f:
+        st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
+
+#--------- Convert image to base64 for embedding ----------
+def get_base64_image(image_path):
+    with open(image_path, "rb") as img_file:
+        return base64.b64encode(img_file.read()).decode()
+
+#--------- Streamlit App ----------
+def main():
+    st.set_page_config(page_title="TPFM Login", layout="centered")
+    load_css()
+    avatar = get_base64_image("login.png")
+
+    html = f"""
+    <div class="login-container">
+        <img src="data:image/png;base64,{avatar}" class="avatar">
+        <h2 class="title">Welcome to TPFM & Performance Dashboard</h2>
+        <form>
+        <input type="text" placeholder="Username" class="input-field"><br>
+            <input type="password" placeholder="Password" class="input-field"><br>
+            <input type="submit" value="Login" class="login-button">
+        </form>
+    </div>
+    """
+    st.markdown(html, unsafe_allow_html=True)
+
+
+
+
 
 st.set_page_config(layout="wide", page_title="Complaint Dashboard")
 
@@ -330,4 +364,5 @@ if not not_visited_df.empty:
     )
 else:
     st.info("No 'Not Visited' complaints found with the current filters.")
+
 
