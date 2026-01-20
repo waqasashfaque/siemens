@@ -265,6 +265,7 @@ if not filtered.empty:
         #fig4 = px.line(monthly_trend, x='MONTH', y='Count', markers=True)
         monthly_trend = (filtered.groupby(['MONTH_YEAR','MONTH_YEAR_SORT']).size().reset_index(name='Count').sort_values('MONTH_YEAR_SORT'))
         fig4 = px.line(monthly_trend,x='MONTH_YEAR',y='Count',markers=True)
+        fig4.update_yaxes(rangemode='tozero')
         fig4.update_layout(title=None,xaxis_title=None,margin=dict(t=0),legend=dict(orientation="h",yanchor="bottom",y=-0.2,xanchor="center",x=0.5))
         fig4 = no_zoom(fig4)
         st.plotly_chart(fig4, use_container_width=True, config={"displayModeBar": False})
@@ -369,6 +370,7 @@ if not not_visited_df.empty:
     )
 else:
     st.info("No 'Not Visited' complaints found with the current filters.")
+
 
 
 
