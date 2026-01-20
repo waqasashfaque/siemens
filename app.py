@@ -107,7 +107,7 @@ def process_kobo_data(data1, data2):
 
 #CHANGES inside the code to returen actual months and do not overlap, January 20, 2026
 
-  merged['Year'] = merged['Complaint_Reg_Date'].dt.year
+    merged['Year'] = merged['Complaint_Reg_Date'].dt.year
 # Month-Year display (Jan-25)
     merged['MONTH_YEAR'] = merged['Complaint_Reg_Date'].dt.strftime('%b-%y')
 # Month-Year sorting key
@@ -369,6 +369,7 @@ if not not_visited_df.empty:
     )
 else:
     st.info("No 'Not Visited' complaints found with the current filters.")
+
 
 
 
