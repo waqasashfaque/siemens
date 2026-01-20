@@ -104,11 +104,16 @@ def process_kobo_data(data1, data2):
     merged['Total_C_Amount'].fillna(0, inplace=True)
     merged['Complaint_Reg_Date'] = pd.to_datetime(merged['Complaint_Reg_Date'], errors='coerce')
     merged.dropna(subset=['Complaint_Reg_Date'], inplace=True)
-    merged['MONTH'] = merged['Complaint_Reg_Date'].dt.strftime('%b')
-    # Set MONTH as categorical with calendar order
-    month_order = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun','Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
-    merged['MONTH'] = pd.Categorical(merged['MONTH'], categories=month_order, ordered=True)
-    merged['Year'] = merged['Complaint_Reg_Date'].dt.year
+
+#CHANGES inside the code to returen actual months and do not overlap, January 20, 2026
+
+  merged['Year'] = merged['Complaint_Reg_Date'].dt.year
+# Month-Year display (Jan-25)
+    merged['MONTH_YEAR'] = merged['Complaint_Reg_Date'].dt.strftime('%b-%y')
+# Month-Year sorting key
+    merged['MONTH_YEAR_SORT'] = merged['Complaint_Reg_Date'].dt.to_period('M').astype(str)
+# Ensure correct chronological order
+    merged = merged.sort_values('MONTH_YEAR_SORT')
     merged['Technician_Name'] = merged['C_Technician_Did'].fillna('Not Assigned')
 
     return merged
@@ -142,7 +147,7 @@ actual_technicians = ["Tahir_Mahmood","Adil_Shehzad","Haseeb_Ullah","Hassnain_Kh
 channels = ['All Channels'] + sorted(df['complaint_channel'].dropna().unique())
 
 years = ['All Years'] + sorted(df['Year'].dropna().unique().tolist())
-months = ['All Months'] + ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun','Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+months = ['All Months'] + sorted(df['MONTH_YEAR'].unique().tolist()) #changed on Jan 20, 2026
 
 f1, f2, f3, f4 = st.columns([2,2,2,2])
 with f1:
@@ -164,7 +169,7 @@ filtered = df.copy()
 if 'All Years' not in selected_year:
     filtered = filtered[filtered['Year'].isin(selected_year)]
 if 'All Months' not in selected_month:
-    filtered = filtered[filtered['MONTH'].isin(selected_month)]
+    filtered = filtered[filtered['MONTH_YEAR'].isin(selected_month)] #minor change in this line
 if 'All Technicians' not in selected_technician:
     filtered = filtered[filtered['Technician_Name'].isin(selected_technician)]
 if 'All Channels' not in selected_channel:
@@ -232,9 +237,11 @@ if not filtered.empty:
     with c2:
         chart_title_box("Monthly Job Types")
         st.markdown("<div style='height:20px;'></div>", unsafe_allow_html=True)
-        job_month = filtered.groupby(['MONTH', 'Job_Type']).size().reset_index(name='Count')
-        job_month = job_month.sort_values('MONTH')
-        fig2 = px.bar(job_month, x='MONTH', y='Count', color='Job_Type', barmode='group')
+        #job_month = filtered.groupby(['MONTH', 'Job_Type']).size().reset_index(name='Count')
+        #job_month = job_month.sort_values('MONTH')
+        job_month = (filtered.groupby(['MONTH_YEAR','MONTH_YEAR_SORT','Job_Type']).size().reset_index(name='Count').sort_values('MONTH_YEAR_SORT'))
+        fig2 = px.bar(job_month,x='MONTH_YEAR',y='Count',color='Job_Type',barmode='group')   
+        #fig2 = px.bar(job_month, x='MONTH', y='Count', color='Job_Type', barmode='group')
         fig2.update_layout(title=None,xaxis_title=None,margin=dict(t=0),legend=dict(orientation="h",yanchor="bottom",y=-0.2,xanchor="center",x=0.5))
         fig2 = no_zoom(fig2)
         st.plotly_chart(fig2, use_container_width=True, config={"displayModeBar": False})
@@ -253,9 +260,11 @@ if not filtered.empty:
     with c4:
         chart_title_box("Monthly Complaint Trend")
         st.markdown("<div style='height:20px;'></div>", unsafe_allow_html=True)
-        monthly_trend = filtered.groupby('MONTH').size().reset_index(name='Count')
-        monthly_trend = monthly_trend.sort_values('MONTH')
-        fig4 = px.line(monthly_trend, x='MONTH', y='Count', markers=True)
+        #monthly_trend = filtered.groupby('MONTH').size().reset_index(name='Count')
+        #monthly_trend = monthly_trend.sort_values('MONTH')
+        #fig4 = px.line(monthly_trend, x='MONTH', y='Count', markers=True)
+        monthly_trend = (filtered.groupby(['MONTH_YEAR','MONTH_YEAR_SORT']).size().reset_index(name='Count').sort_values('MONTH_YEAR_SORT'))
+        fig4 = px.line(monthly_trend,x='MONTH_YEAR',y='Count',markers=True)
         fig4.update_layout(title=None,xaxis_title=None,margin=dict(t=0),legend=dict(orientation="h",yanchor="bottom",y=-0.2,xanchor="center",x=0.5))
         fig4 = no_zoom(fig4)
         st.plotly_chart(fig4, use_container_width=True, config={"displayModeBar": False})
@@ -360,6 +369,7 @@ if not not_visited_df.empty:
     )
 else:
     st.info("No 'Not Visited' complaints found with the current filters.")
+
 
 
 
