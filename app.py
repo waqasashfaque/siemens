@@ -274,12 +274,20 @@ if not filtered.empty:
 
 
 # Not Visited Complaints Table
+#st.markdown("<div style='height:25px;'></div>", unsafe_allow_html=True)
+#chart_title_box("🚫 Pending Complaints – Technician Visit Required")
+#st.markdown("<div style='height:10px;'></div>", unsafe_allow_html=True)
+
+# Not Visited Complaints Table
 st.markdown("<div style='height:25px;'></div>", unsafe_allow_html=True)
-chart_title_box("🚫 Pending Complaints – Technician Visit Required")
+# Filter for not visited complaints
+not_visited_df = filtered[filtered['C_Job_Status'] == "Not Visited Yet"]
+pending_count = len(not_visited_df)
+chart_title_box(f"🚫 Pending Complaints – Technician Visit Required ({pending_count})")
 st.markdown("<div style='height:10px;'></div>", unsafe_allow_html=True)
 
 # Filter for not visited complaints
-not_visited_df = filtered[filtered['C_Job_Status'] == "Not Visited Yet"]
+# not_visited_df = filtered[filtered['C_Job_Status'] == "Not Visited Yet"]
 
 if not not_visited_df.empty:
     # Select and rename columns
@@ -370,6 +378,7 @@ if not not_visited_df.empty:
     )
 else:
     st.info("No 'Not Visited' complaints found with the current filters.")
+
 
 
 
